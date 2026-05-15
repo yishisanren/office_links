@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David 的链接库 · Office Links</title>
+<style>
+  :root {
+    --paper: #faf7f0;
+    --paper-warm: #efe9dc;
+    --ink: #1a1612;
+    --ink-soft: #4a423a;
+    --ink-mute: #8a7e6f;
+    --rule-soft: #e2d8be;
+    --green: #1f4f3e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 40px 100px; }
+  h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .subtitle { font-size: 14px; color: var(--ink-mute); margin-bottom: 40px; }
+  .chapter {
+    background: var(--green);
+    color: var(--paper);
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .link-card {
+    background: #fff;
+    border: 1px solid var(--rule-soft);
+    border-left: 4px solid var(--green);
+    border-radius: 0 3px 3px 0;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: background 0.15s;
+  }
+  .link-card:hover { background: var(--paper-warm); }
+  .link-title { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .link-desc { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; }
+  .link-meta { font-size: 11px; color: var(--ink-mute); letter-spacing: 0.05em; }
+  .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--rule-soft); font-size: 12px; color: var(--ink-mute); text-align: center; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>David 的链接库</h1>
+  <p class="subtitle">Office Links · 零散链接的固定家</p>
+
+  <div class="chapter">复盘与分析</div>
+
+  <a class="link-card" href="./voc-analysis/">
+    <div class="link-title">4 月底吸奶器 VOC 客诉问题及后续举措</div>
+    <div class="link-desc">问题发生过程、三层根因分析、组织调整与五项配套举措。</div>
+    <div class="link-meta">分类：复盘 · 添加：2026-05</div>
+  </a>
+
+  <div class="footer">
+    托管于 GitHub Pages · 仓库：<a href="https://github.com/yishisanren/office_links" style="color:var(--ink-mute);">github.com/yishisanren/office_links</a>
+  </div>
+</div>
+</body>
+</html>

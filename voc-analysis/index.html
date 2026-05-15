@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 月底吸奶器 VOC 客诉问题及后续举措</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf7f0;
+    --paper-warm: #efe9dc;
+    --paper-deep: #e5dcc6;
+    --ink: #1a1612;
+    --ink-soft: #4a423a;
+    --ink-mute: #8a7e6f;
+    --rule: #d4c9b0;
+    --rule-soft: #e2d8be;
+    --green: #1f4f3e;
+    --green-light: #2d6f5a;
+    --green-soft: #e7eee8;
+    --orange: #c25e08;
+    --orange-light: #d97706;
+    --orange-soft: rgba(217, 119, 6, 0.12);
+    --red: #b8311e;
+    --red-dark: #8a2516;
+    --red-soft: rgba(184, 49, 30, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 64px 56px 100px;
+  }
+  .report-tag {
+    display: inline-block;
+    background: var(--red);
+    color: var(--paper);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 3px;
+    letter-spacing: 0.2em;
+    margin-bottom: 18px;
+  }
+  .report-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .report-subtitle {
+    font-size: 15px;
+    color: var(--ink-mute);
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+  .summary-box {
+    background: var(--paper-warm);
+    padding: 22px 26px;
+    margin-bottom: 8px;
+    border-radius: 3px;
+  }
+  .summary-text {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink-soft);
+  }
+  .summary-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .time-note {
+    font-size: 12px;
+    color: var(--ink-mute);
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 32px;
+    letter-spacing: 0.05em;
+  }
+  .chapter-header {
+    background: var(--green);
+    color: var(--paper);
+    padding: 14px 22px;
+    margin-bottom: 28px;
+    margin-top: 56px;
+  }
+  .chapter-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--paper-warm);
+    padding: 22px 22px 18px;
+    border-radius: 3px;
+  }
+  .stat-card.alert {
+    background: var(--red-soft);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .stat-number.danger {
+    color: var(--red);
+  }
+  .stat-unit {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mute);
+  }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .info-block {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+  }
+  .info-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .info-label::before {
+    content: '';
+    width: 3px;
+    height: 12px;
+    background: var(--green);
+    border-radius: 1px;
+  }
+  .info-content {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+  }
+  .info-content strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .timeline {
+    margin-top: 8px;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--rule-soft);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--orange);
+    min-width: 130px;
+    padding-top: 3px;
+    flex-shrink: 0;
+  }
+  .timeline-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .timeline-desc strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .root-cause-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .cause-layer {
+    border-radius: 3px;
+    padding: 22px 26px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 22px;
+    align-items: center;
+  }
+  .cause-layer:not(:last-child)::after {
+    content: '↓';
+    position: absolute;
+    left: 45px;
+    bottom: -18px;
+    transform: translate(-50%, 0);
+    font-size: 16px;
+    font-weight: 700;
+    z-index: 1;
+  }
+  .cause-layer.l1 {
+    background: #fff;
+    border: 1px solid var(--rule);
+  }
+  .cause-layer.l1::after {
+    color: var(--ink-mute);
+  }
+  .cause-layer.l2 {
+    background: var(--orange-soft);
+    border: 1px solid rgba(194, 94, 8, 0.25);
+  }
+  .cause-layer.l2::after {
+    color: var(--orange);
+  }
+  .cause-layer.l3 {
+    background: var(--red-soft);
+    border: 1px solid rgba(184, 49, 30, 0.25);
+  }
+  .layer-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    color: var(--paper);
+    text-align: center;
+    padding: 6px;
+  }
+  .layer-badge.l1 { background: var(--ink-mute); }
+  .layer-badge.l2 { background: var(--orange); }
+  .layer-badge.l3 { background: var(--red); }
+  .layer-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+    margin-bottom: 2px;
+  }
+  .layer-tag {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .cause-body {
+    min-width: 0;
+  }
+  .cause-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .cause-text {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+  }
+  .cause-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .cause-layer.l3 .cause-title {
+    color: var(--red-dark);
+  }
+  .org-change {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 26px 28px;
+  }
+  .org-statement {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .org-statement strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .org-flow {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .org-state {
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .org-state.before {
+    background: var(--paper-warm);
+  }
+  .org-state.after {
+    background: var(--green-soft);
+    border-color: var(--green);
+  }
+  .org-state-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-mute);
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+  }
+  .org-state.after .org-state-label {
+    color: var(--green);
+  }
+  .org-state-content {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .org-arrow {
+    font-size: 28px;
+    color: var(--green);
+    font-weight: 700;
+    text-align: center;
+  }
+  .action-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+  }
+  .action-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .action-title-block {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    flex: 1;
+    min-width: 0;
+  }
+  .action-num {
+    background: var(--green);
+    color: var(--paper);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .action-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .action-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .action-tag {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+  }
+  .action-status {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status-done { background: var(--green); color: var(--paper); }
+  .status-progress { background: var(--orange); color: var(--paper); }
+  .status-planned { background: var(--orange-soft); color: var(--orange); }
+  .status-applying { background: var(--paper-deep); color: var(--ink-soft); }
+  .action-body {
+    margin-top: 14px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .action-text {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .action-text:last-child { margin-bottom: 0; }
+  .action-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .action-progress {
+    background: var(--green-soft);
+    padding: 12px 16px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--green);
+    line-height: 1.7;
+  }
+  .action-progress strong {
+    color: var(--green);
+    font-weight: 700;
+  }
+  .ref-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .ref-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--green);
+    border-radius: 0 3px 3px 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.5;
+    transition: background 0.2s;
+  }
+  .ref-link:hover {
+    background: var(--paper-warm);
+  }
+  .ref-icon {
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+  .ref-label {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .ref-url {
+    color: var(--ink-mute);
+    font-size: 11px;
+    margin-left: 6px;
+    word-break: break-all;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .embed-img {
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    padding: 12px;
+  }
+  .embed-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+  }
+  .embed-img-caption {
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 0.03em;
+  }
+  .embed-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .embed-pair .embed-img {
+    margin-top: 0;
+  }
+  @media (max-width: 768px) {
+    .page { padding: 32px 20px 60px; }
+    .report-title { font-size: 26px; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .cause-layer { grid-template-columns: 1fr; gap: 16px; padding: 18px 20px; }
+    .layer-badge { width: 60px; height: 60px; }
+    .cause-layer:not(:last-child)::after { left: 50%; }
+    .org-flow { grid-template-columns: 1fr; }
+    .org-arrow { transform: rotate(90deg); }
+    .action-card { padding: 20px 18px; }
+    .embed-pair { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1 class="report-title">4 月底吸奶器 VOC 客诉问题及后续举措</h1>
+  </header>
+  <div class="chapter-header">
+    <span class="chapter-title">问题发生过程</span>
+  </div>
+  <div class="info-block">
+    <div class="info-label">表现</div>
+    <div class="info-content">
+      美东时间 04.21 中午 12:30 起，正值海外用户使用高峰。后端服务出现间歇性不可用，<strong>吸奶器配网与重连均失败</strong>，用户体验受到直接影响。客诉与差评在数小时内集中浮现。
+    </div>
+  </div>
+  <div class="info-block">
+    <div class="info-label">事件时间线</div>
+    <div class="info-content">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">04.21 · 12:30</div>
+          <div class="timeline-desc">后端服务开始间歇性不可用，配网与重连陆续失败。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">04.21 · 19:30</div>
+          <div class="timeline-desc">海外进入低峰时段，服务自然恢复（流量回落使数据库压力解除）。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">04.21 · 23:30</div>
+          <div class="timeline-desc">DBA 完成索引补充，问题<strong>彻底解决</strong>。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chapter-header">
+    <span class="chapter-title">根因穿透 · 三层分析</span>
+  </div>
+  <div class="root-cause-flow">
+    <div class="cause-layer l1">
+      <div class="layer-badge l1">
+        <div class="layer-num">L1</div>
+        <div class="layer-tag">表层</div>
+      </div>
+      <div class="cause-body">
+        <div class="cause-title">云端接口异常，吸奶器配网与重连失败</div>
+        <div class="cause-text">
+          海外用户高峰期，某个云端接口大量超时与报错，连锁拖累依赖该接口的配网与重连链路。这是<strong>用户直接感知到的现象</strong>。
+        </div>
+      </div>
+    </div>
+    <div class="cause-layer l2">
+      <div class="layer-badge l2">
+        <div class="layer-num">L2</div>
+        <div class="layer-tag">直接原因</div>
+      </div>
+      <div class="cause-body">
+        <div class="cause-title">设备表 14 万量级 + 未建索引，慢查询拖垮数据库</div>
+        <div class="cause-text">
+          该异常接口依赖了一个对设备表的查询。当天设备表数据达到 <strong>14 万量级</strong>，且该查询<strong>未建立对应索引</strong>，在海外高峰流量下数据库查询性能急剧下降，最终拖垮数据库。
+        </div>
+      </div>
+    </div>
+    <div class="cause-layer l3">
+      <div class="layer-badge l3">
+        <div class="layer-num">L3</div>
+        <div class="layer-tag">根本原因</div>
+      </div>
+      <div class="cause-body">
+        <div class="cause-title">慢查询监控与处理流程仍有建设空间</div>
+        <div class="cause-text">
+          设备表数据量级是<strong>渐进增长</strong>而非跳跃式 —— 这意味着如果当时具备慢查询监控指标，<strong>接口性能下滑应能在事故前几天就被发现</strong>，而不必等到数据库压力集中爆发的时点。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chapter-header">
+    <span class="chapter-title">组织调整 · 团队架构整合</span>
+  </div>
+  <div class="org-change">
+    <p class="org-statement">
+      复盘后我们调整了组织架构，<strong>把原 IoT 云服务团队纳入 App 生态中心</strong>。后续 App 端到云端会作为<strong>一个团队整体对 App 稳定性负责</strong>，避免出现"端云分离导致的监控盲区"。
+    </p>
+    <div class="org-flow">
+      <div class="org-state before">
+        <div class="org-state-label">调整前</div>
+        <div class="org-state-content">IoT 云服务团队 · 独立<br>App 端团队 · 独立</div>
+      </div>
+      <div class="org-arrow">→</div>
+      <div class="org-state after">
+        <div class="org-state-label">调整后</div>
+        <div class="org-state-content">App 生态中心<br>统一对 App 稳定性负责</div>
+      </div>
+    </div>
+  </div>
+  <div class="chapter-header">
+    <span class="chapter-title">五项配套举措</span>
+  </div>
+  <article class="action-card">
+    <div class="action-head">
+      <div class="action-title-block">
+        <div class="action-num">01</div>
+        <div class="action-meta">
+          <div class="action-title">搭建接口稳定性监控平台</div>
+          <div class="action-tag">直击根因 · 解决"没有慢查询监控"</div>
+        </div>
+      </div>
+      <span class="action-status status-done">已上线</span>
+    </div>
+    <div class="action-body">
+      <p class="action-text">
+        基于 Grafana + Prometheus 搭建接口稳定性监控平台。<strong>每个接口一旦达到阈值或 CPU 占满，监控会及时看到并触发告警</strong>。监控覆盖 JVM、Spring Boot 应用、数据库查询等关键维度。
+      </p>
+      <div class="ref-list">
+        <a href="https://grafana-us.luteos.cloud/d/hou469910799/jvm-springboot3-dashboard-for-prometheus-operator?orgId=1&from=now-3h&to=now&timezone=browser&var-datasource=bevfoacyvlwqof&var-application=app-server&var-env=prod&var-region=us-east-1&var-instance=172.31.28.3:8089&var-jvm_memory_pool_heap=G1%20Eden%20Space&var-jvm_memory_pool_nonheap=$__all&var-jvm_buffer_pool=direct&refresh=30s" class="ref-link" target="_blank">
+          <span class="ref-icon">↗</span>
+          <span class="ref-label">Grafana 监控面板（生产环境 · App Server）</span>
+        </a>
+        <a href="https://alidocs.dingtalk.com/i/nodes/NZQYprEoWobLMMzjuDlXjA3b81waOeDk" class="ref-link" target="_blank">
+          <span class="ref-icon">↗</span>
+          <span class="ref-label">Grafana 指标监测系统相关截图</span>
+        </a>
+      </div>
+    </div>
+  </article>
+  <article class="action-card">
+    <div class="action-head">
+      <div class="action-title-block">
+        <div class="action-num">02</div>
+        <div class="action-meta">
+          <div class="action-title">云端接口历史债清理</div>
+          <div class="action-tag">系统性排雷 · 不让"漏加索引"再重演</div>
+        </div>
+      </div>
+      <span class="action-status status-progress">进行中</span>
+    </div>
+    <div class="action-body">
+      <p class="action-text">
+        对所有云端接口进行历史债清理 —— <strong>共 700+ 接口（其中涉及 IoT 的 349 个）、30 个定时任务</strong>，全部通过 <strong>AI 初步筛查 + 人工审核</strong>双层把关，把有问题的接口逐步排雷优化。
+      </p>
+      <div class="action-progress">
+        <strong>当前进度</strong>：AI SKILL 调教已完成；定时任务相关风险排查已完成，正在整改中；接口侧整改有序推进。
+      </div>
+      <div class="ref-list">
+        <a href="https://alidocs.dingtalk.com/i/nodes/o14dA3GK8gzPeegAfKg3d9yRJ9ekBD76" class="ref-link" target="_blank">
+          <span class="ref-icon">↗</span>
+          <span class="ref-label">API & Job 代码 · AI 扫描评审指导文档</span>
+        </a>
+      </div>
+    </div>
+  </article>
+  <article class="action-card">
+    <div class="action-head">
+      <div class="action-title-block">
+        <div class="action-num">03</div>
+        <div class="action-meta">
+          <div class="action-title">按业务优先级启动逐级熔断降级机制</div>
+          <div class="action-tag">兜底保护 · 非核心服务不能拖垮核心</div>
+        </div>
+      </div>
+      <span class="action-status status-planned">已排期开发</span>
+    </div>
+    <div class="action-body">
+      <p class="action-text">
+        所有接口按业务优先级启动<strong>逐级熔断机制</strong>。当非核心服务出问题时，<strong>不会导致核心服务连锁故障</strong>；若极端情况下核心服务仍受影响，将<strong>挂牌告知用户</strong>，避免无声失效。
+      </p>
+      <p class="action-text">
+        方案已制定并完成排期，正在开发实施中。
+      </p>
+      <div class="ref-list">
+        <a href="https://alidocs.dingtalk.com/i/nodes/6LeBq413JAeybbj4ur4dvYmQJDOnGvpb" class="ref-link" target="_blank">
+          <span class="ref-icon">↗</span>
+          <span class="ref-label">APP 限流熔断降级方案（初版）</span>
+        </a>
+      </div>
+    </div>
+  </article>
+  <article class="action-card">
+    <div class="action-head">
+      <div class="action-title-block">
+        <div class="action-num">04</div>
+        <div class="action-meta">
+          <div class="action-title">驻场运维支持</div>
+          <div class="action-tag">补齐人力短板 · App 专属云端运维</div>
+        </div>
+      </div>
+      <span class="action-status status-applying">已申请</span>
+    </div>
+    <div class="action-body">
+      <p class="action-text">
+        当前<strong>缺少专门服务 App 的云端运维人员</strong>。已向数字化团队提出要求：必须有专门服务 App 的运维人员<strong>驻场至少 1 个 Q</strong>，确保运维稳定。
+      </p>
+    </div>
+  </article>
+  <article class="action-card">
+    <div class="action-head">
+      <div class="action-title-block">
+        <div class="action-num">05</div>
+        <div class="action-meta">
+          <div class="action-title">值班排班机制</div>
+          <div class="action-tag">7×24 响应 · 接口出问题随时有人接住</div>
+        </div>
+      </div>
+      <span class="action-status status-done">已建立</span>
+    </div>
+    <div class="action-body">
+      <p class="action-text">
+        建立 7×24 值班排班机制：基于 <strong>Reduty 系统</strong> 配置 App 日常排班，<strong>7 名 IoT 云服务核心研发轮值</strong>，确保接口出问题后 24 小时随时有人响应。
+      </p>
+      <div class="ref-list">
+        <a href="http://reduty.luteos.site/schedules" class="ref-link" target="_blank">
+          <span class="ref-icon">↗</span>
+          <span class="ref-label">Reduty · 值班排班系统</span>
+        </a>
+      </div>
+    </div>
+  </article>
+</div>
+</body>
+</html>
