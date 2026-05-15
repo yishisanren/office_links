@@ -521,6 +521,15 @@
   .embed-pair .embed-img {
     margin-top: 0;
   }
+  .embed-trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .embed-trio .embed-img {
+    margin-top: 0;
+  }
   @media (max-width: 768px) {
     .page { padding: 32px 20px 60px; }
     .report-title { font-size: 26px; }
@@ -532,6 +541,7 @@
     .org-arrow { transform: rotate(90deg); }
     .action-card { padding: 20px 18px; }
     .embed-pair { grid-template-columns: 1fr; }
+    .embed-trio { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -656,6 +666,30 @@
           <span class="ref-label">Grafana 指标监测系统相关截图</span>
         </a>
       </div>
+      <div class="embed-trio">
+        <div class="embed-img">
+          <img src="images/grafana-jvm-overview.png" alt="Grafana JVM 监控总览">
+          <div class="embed-img-caption">JVM 监控总览：Status / Heap / CPU 使用率</div>
+        </div>
+        <div class="embed-img">
+          <img src="images/grafana-http-monitor.png" alt="HTTP 请求监控">
+          <div class="embed-img-caption">HTTP 请求监控：Rate / Errors / Duration / JVM 内存</div>
+        </div>
+        <div class="embed-img">
+          <img src="images/grafana-qps-exception.png" alt="QPS 与异常监控">
+          <div class="embed-img-caption">QPS 详情 · Top 10 慢接口 · 异常分布</div>
+        </div>
+      </div>
+      <div class="embed-pair">
+        <div class="embed-img">
+          <img src="images/alert-groups.png" alt="告警群分级">
+          <div class="embed-img-caption">告警群按环境分级：生产 / 开发 / 预发 / 测试</div>
+        </div>
+        <div class="embed-img">
+          <img src="images/alert-notification.png" alt="告警通知示例">
+          <div class="embed-img-caption">告警通知示例：接口 500 报错（已恢复）</div>
+        </div>
+      </div>
     </div>
   </article>
   <article class="action-card">
@@ -747,6 +781,10 @@
           <span class="ref-icon">↗</span>
           <span class="ref-label">Reduty · 值班排班系统</span>
         </a>
+      </div>
+      <div class="embed-img">
+        <img src="images/reduty-schedule.png" alt="Reduty 排班管理界面">
+        <div class="embed-img-caption">Reduty 排班管理 · App 日常排班（7 人轮值）</div>
       </div>
     </div>
   </article>
