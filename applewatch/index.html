@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momcozy Apple Watch App 项目汇报</title>
+<style>
+  :root {
+    --pink-warm: #F4B5C7;
+    --pink-deep: #993556;
+    --pink-soft: #FBEAF0;
+    --violet: #C4A8E8;
+    --mint: #7DD8C0;
+    --bg: #FAF7F5;
+    --text: #1A1A1A;
+    --text-2: #555;
+    --text-3: #9B9B9B;
+    --line: #E8E0DC;
+    --card: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  .doc {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 80px 60px 120px;
+    background: #fff;
+    min-height: 100vh;
+    box-shadow: 0 0 60px rgba(0,0,0,0.04);
+  }
+
+  .doc-header {
+    padding-bottom: 32px;
+    margin-bottom: 60px;
+    border-bottom: 2px solid var(--pink-warm);
+  }
+  .doc-title {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 64px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.01em;
+  }
+  h1:first-of-type { margin-top: 0; }
+  h2 {
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--text-2);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  .stat-block {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 32px;
+    background: linear-gradient(135deg, var(--pink-soft) 0%, #fff 100%);
+    border-radius: 16px;
+    margin: 24px 0;
+    border: 1px solid var(--pink-warm);
+  }
+  .stat-num {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink-warm));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+    flex-shrink: 0;
+  }
+  .stat-info p { margin-bottom: 6px; font-size: 15px; }
+  .stat-info p:first-child { color: var(--text); font-weight: 500; font-size: 16px; }
+  .stat-source {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 10px !important;
+    padding-top: 10px;
+    border-top: 1px solid rgba(153, 53, 86, 0.15);
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .scenario-card {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--line);
+  }
+  .scenario-icon { font-size: 24px; margin-bottom: 10px; }
+  .scenario-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .scenario-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+  .quote-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .quote-card {
+    background: linear-gradient(135deg, #FFF9F5 0%, #fff 100%);
+    border-radius: 12px;
+    padding: 22px 20px;
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .quote-mark {
+    font-size: 42px;
+    color: var(--pink-warm);
+    line-height: 1;
+    font-family: Georgia, serif;
+    position: absolute;
+    top: 10px;
+    left: 16px;
+    opacity: 0.6;
+  }
+  .quote-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  .quote-text mark, .quote-translate mark {
+    background: rgba(244, 181, 199, 0.45);
+    color: var(--pink-deep);
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-style: normal;
+  }
+  .quote-translate {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.6;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .compare-side { padding: 24px; border-radius: 12px; }
+  .compare-side.them { background: #F5F5F5; border: 1px solid #E5E5E5; }
+  .compare-side.us { background: linear-gradient(135deg, var(--pink-soft), #fff); border: 1px solid var(--pink-warm); }
+  .compare-label {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .compare-side.them .compare-label { background: #E0E0E0; color: #666; }
+  .compare-side.us .compare-label { background: var(--pink-deep); color: #fff; }
+  .compare-side h4 { font-size: 18px; margin-bottom: 12px; }
+  .compare-side ul { list-style: none; }
+  .compare-side li {
+    padding: 7px 0;
+    font-size: 14px;
+    color: var(--text-2);
+    border-bottom: 1px dashed rgba(0,0,0,0.08);
+  }
+  .compare-side li:last-child { border: none; }
+  .compare-side.us li.highlight { color: var(--pink-deep); font-weight: 500; }
+  .compare-side li.muted { color: #BBB; }
+
+  /* 平台 vs 品线 职责分工 */
+  .role-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .role-card {
+    padding: 28px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+  .role-card.platform {
+    background: linear-gradient(135deg, var(--pink-soft) 0%, #fff 100%);
+    border-color: var(--pink-warm);
+  }
+  .role-card.line {
+    background: linear-gradient(135deg, #F0E4F7 0%, #fff 100%);
+    border-color: var(--violet);
+  }
+  .role-label {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .role-card.platform .role-label { background: var(--pink-deep); color: #fff; }
+  .role-card.line .role-label { background: #7B5CA8; color: #fff; }
+  .role-name { font-size: 18px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+  .role-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+  .role-card ul { list-style: none; padding-left: 0; }
+  .role-card li {
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 7px 0;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .role-card li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--pink-warm);
+    font-weight: 600;
+  }
+  .role-card.line li::before { color: var(--violet); }
+
+  /* 能力 + 预览图 卡片 */
+  .cap-detail {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 28px;
+    margin: 24px 0;
+    padding: 28px;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    align-items: center;
+  }
+  .cap-detail-preview {
+    display: flex;
+    justify-content: center;
+  }
+  .watch-frame {
+    width: 150px;
+    height: 182px;
+    background: #1A1A1A;
+    border-radius: 30px;
+    padding: 12px;
+  }
+  .watch-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 11px;
+    text-align: center;
+    padding: 8px;
+    line-height: 1.4;
+  }
+  .cap-detail-content {}
+  .cap-num {
+    font-size: 12px;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .cap-detail-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--pink-deep);
+    margin-bottom: 10px;
+  }
+  .cap-detail-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+  .cap-products {
+    font-size: 13px;
+    color: var(--text);
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    line-height: 1.6;
+  }
+  .cap-products strong {
+    color: var(--text-3);
+    font-weight: 500;
+    margin-right: 6px;
+    font-size: 12px;
+  }
+
+  /* 业务赋能 */
+  .biz-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .biz-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--line);
+  }
+  .biz-card.b1 { border-left: 3px solid var(--pink-warm); }
+  .biz-card.b2 { border-left: 3px solid var(--violet); }
+  .biz-card.b3 { border-left: 3px solid #A8C8FF; }
+  .biz-card.b4 { border-left: 3px solid var(--mint); }
+  .biz-name { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+  .biz-caps { display: flex; flex-direction: column; gap: 6px; }
+  .biz-cap {
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 5px 10px;
+    background: var(--bg);
+    border-radius: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .doc { padding: 40px 20px; }
+    .scenario-grid { grid-template-columns: 1fr 1fr; }
+    .compare, .biz-grid, .quote-grid, .role-split { grid-template-columns: 1fr; }
+    .cap-detail { grid-template-columns: 1fr; text-align: center; }
+    .cap-detail-content { text-align: left; }
+    .doc-title { font-size: 26px; }
+    h1 { font-size: 22px; }
+    .stat-block { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .stat-num { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="doc-title">Momcozy App for Apple Watch</div>
+  </div>
+
+  <h1>一、为什么要做 Apple Watch App</h1>
+
+  <h2>用户场景的真实需求</h2>
+  <p>妈妈带娃过程中双手经常被占用,掏手机不便。吸奶、夜间哺乳、产后训练等场景,手腕设备比手机更顺手。</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <div class="scenario-icon">🍼</div>
+      <div class="scenario-title">吸奶场景</div>
+      <div class="scenario-desc">妈妈穿戴吸奶器时双手不便,调档、暂停、查看时长全靠掏手机不现实</div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-icon">🌙</div>
+      <div class="scenario-title">夜间哺乳</div>
+      <div class="scenario-desc">不想点亮手机吵醒宝宝,手表静默操作完成时长记录</div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-icon">🌸</div>
+      <div class="scenario-title">产后训练</div>
+      <div class="scenario-desc">训练时专注身体感受,手腕震动比看屏幕更直观</div>
+    </div>
+  </div>
+
+  <h2>用户主动诉求</h2>
+  <p>用户在应用商店评论中主动提出 Apple Watch 版本的需求。</p>
+
+  <div class="quote-grid">
+    <div class="quote-card">
+      <div class="quote-mark">"</div>
+      <div class="quote-text"><mark>Apple Watch version please!</mark> The app is easy to use, and the M9 itself is also efficiently designed. I didn't use other brand products myself so can't really compare. Yet the product and the app have several potentials: <mark>including launching an app version that can be used on Apple Watch.</mark> Anyway, great product, and wish I can use it more.</div>
+      <div class="quote-translate">期待 Apple Watch 版本!这款 App 很好用,M9 本身设计也很高效。我没用过别家产品没法对比,但产品和 App 都很有潜力,包括推出可以在 Apple Watch 上用的版本。总之是好产品,希望能用得更多。</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">haven't had any issues, super helpful keeping track of baby care routines love that it gives that option. <mark>being able to connect to smart watch would be super helpful just to update nurture/pumping amounts</mark></div>
+      <div class="quote-translate">用着没什么问题,记录宝宝日常护理特别有帮助,很喜欢有这个功能。如果能连智能手表就更方便了,可以直接更新喂养/吸奶的量。</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">Makes me log in over and over. <mark>Doesn't allow mirroring on Apple Watch.</mark></div>
+      <div class="quote-translate">反复要求我登录,不支持在 Apple Watch 上镜像显示。</div>
+    </div>
+  </div>
+
+  <h2>目标用户基数足够大</h2>
+  <p>Apple Watch 在 Momcozy 核心市场已是高频穿戴设备,与 Momcozy 高端用户群体存在显著重合。</p>
+
+  <div class="stat-block">
+    <div class="stat-num">30%-33%</div>
+    <div class="stat-info">
+      <p>美国 iPhone 用户中拥有 Apple Watch 的比例</p>
+      <p>覆盖人群规模大,且与 Momcozy 高端目标用户重合度高</p>
+      <p class="stat-source">数据来源:CIRP 2022 · The New Consumer 2025</p>
+    </div>
+  </div>
+
+  <h2>竞品已经在做,我们需要补齐 + 做出差异化</h2>
+  <p>Apple Watch 正在成为高端母婴品牌的标配能力。我们目前缺失,需要补齐;同时利用孕产康产品线,做出 Willow 没有的差异化。</p>
+
+  <div class="compare">
+    <div class="compare-side them">
+      <span class="compare-label">竞品</span>
+      <h4>Willow</h4>
+      <ul>
+        <li>吸奶器实时控制</li>
+        <li>吸奶数据查看</li>
+        <li class="muted">— 无训练跟随能力</li>
+        <li class="muted">— 仅覆盖吸奶器产品线</li>
+        <li class="muted">— 无跨产品线查看</li>
+      </ul>
+    </div>
+    <div class="compare-side us">
+      <span class="compare-label">Momcozy</span>
+      <h4>对标 + 差异化</h4>
+      <ul>
+        <li>吸奶器实时控制(对标)</li>
+        <li>吸奶数据查看(对标)</li>
+        <li class="highlight">+ 训练跟随能力(独有)</li>
+        <li class="highlight">+ 全产品线主动提醒(独有)</li>
+        <li class="highlight">+ 跨产品线轻量查看(独有)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h1>二、我们打算怎么做</h1>
+
+  <h2>平台与品线的分工</h2>
+  <p>Apple Watch App 由 App 生态中心(平台)和各产品线(品线)协作完成。平台提供通用能力底座,品线负责将自己的设备接入这些能力。</p>
+
+  <div class="role-split">
+    <div class="role-card platform">
+      <span class="role-label">平台</span>
+      <div class="role-name">Momcozy App</div>
+      <div class="role-desc">在 Apple Watch 上构建通用能力底座,提供统一的能力框架供品线接入。</div>
+      <ul>
+        <li>实时操作能力框架</li>
+        <li>训练跟随能力框架</li>
+        <li>提醒推送通道</li>
+        <li>轻量查看数据展示组件</li>
+        <li>表盘组件框架</li>
+      </ul>
+    </div>
+    <div class="role-card line">
+      <span class="role-label">品线</span>
+      <div class="role-name">吸奶器</div>
+      <div class="role-desc">把自己的设备接入平台提供的能力底座,完成业务层的具体实现。</div>
+      <ul>
+        <li>设备协议适配</li>
+        <li>业务数据定义</li>
+        <li>设备控制面板</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>五类通用能力</h2>
+  <p>基于 Apple Watch 的硬件特性(戴在手腕、震动反馈、小屏抬腕即看、表盘组件),平台在手表上构建五类通用能力,品线的硬件按需挂载到这些能力上。</p>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <div class="watch-frame"><div class="watch-screen">实时操作<br>预览图待补充</div></div>
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">01</div>
+      <div class="cap-detail-name">实时操作</div>
+      <div class="cap-detail-desc">使用设备过程中,在手腕上完成给设备发指令、调档、暂停结束等操作,同时实时查看设备状态数据。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶器、按摩仪、光疗仪、电动摇椅、白噪音音箱、雾化器</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <div class="watch-frame"><div class="watch-screen">训练跟随<br>预览图待补充</div></div>
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">02</div>
+      <div class="cap-detail-name">训练跟随</div>
+      <div class="cap-detail-desc">训练全程在手表上呈现当前阶段、阶段倒计时、下一阶段预告,配合震动节奏引导,妈妈脱离手机即可完成训练。</div>
+      <div class="cap-products"><strong>挂载产品</strong>盆底肌修复仪训练、腰腹按摩仪程序、其他孕产康训练课程</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <div class="watch-frame"><div class="watch-screen">主动提醒<br>预览图待补充</div></div>
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">03</div>
+      <div class="cap-detail-name">主动提醒</div>
+      <div class="cap-detail-desc">计划/异常/完成事件通过震动主动推送到手腕。震动反馈天然比手机通知更难错过,尤其适合夜间和异常告警场景。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶提醒、训练日程、BBM 异常告警、温度贴异常告警、调奶器/暖奶器完成提醒、清洗机完成提醒</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <div class="watch-frame"><div class="watch-screen">轻量查看<br>预览图待补充</div></div>
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">04</div>
+      <div class="cap-detail-name">轻量查看</div>
+      <div class="cap-detail-desc">抬腕快速确认关键状态数据,无需打开手机。包括吸奶记录、宝宝体温、妈妈和宝宝的产后/周龄状态、今日待办等。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶数据、当前体温、产后周数、宝宝周龄、今日待办、训练记录、哺乳记录、温度曲线、BBM 环境数据</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <div class="watch-frame"><div class="watch-screen">被动触达<br>预览图待补充</div></div>
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">05</div>
+      <div class="cap-detail-name">被动触达</div>
+      <div class="cap-detail-desc">不需要打开 App,关键信息直接显示在表盘上。妈妈日常看时间时即可瞥到 Momcozy 的核心数据。</div>
+      <div class="cap-products"><strong>挂载产品</strong>下次吸奶时间、上次吸奶容量、待办数量、异常告警状态、当前体温、产后周数</div>
+    </div>
+  </div>
+
+  <h2>业务赋能映射</h2>
+  <p>五类能力对四个场景组的具体赋能。</p>
+
+  <div class="biz-grid">
+    <div class="biz-card b1">
+      <div class="biz-name">哺乳场景</div>
+      <div class="biz-caps">
+        <div class="biz-cap">实时操作 · 吸奶器全套</div>
+        <div class="biz-cap">主动提醒 · 计划提醒</div>
+        <div class="biz-cap">轻量查看 · 吸奶数据</div>
+        <div class="biz-cap">被动触达 · 表盘组件</div>
+      </div>
+    </div>
+    <div class="biz-card b2">
+      <div class="biz-name">孕产康场景</div>
+      <div class="biz-caps">
+        <div class="biz-cap">训练跟随 · 盆底肌、按摩仪程序</div>
+        <div class="biz-cap">主动提醒 · 训练日程</div>
+        <div class="biz-cap">轻量查看 · 训练记录</div>
+      </div>
+    </div>
+    <div class="biz-card b3">
+      <div class="biz-name">睡眠看护场景</div>
+      <div class="biz-caps">
+        <div class="biz-cap">实时操作 · 电动摇椅、白噪音音箱</div>
+        <div class="biz-cap">主动提醒 · BBM 异常告警</div>
+        <div class="biz-cap">轻量查看 · BBM 环境数据</div>
+      </div>
+    </div>
+    <div class="biz-card b4">
+      <div class="biz-name">婴童健康场景</div>
+      <div class="biz-caps">
+        <div class="biz-cap">实时操作 · 雾化器</div>
+        <div class="biz-cap">主动提醒 · 温度贴异常、清洗机完成</div>
+        <div class="biz-cap">轻量查看 · 当前体温、温度曲线</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
