@@ -124,6 +124,38 @@
     border-top: 1px solid rgba(153, 53, 86, 0.15);
   }
 
+  /* 双 stat 卡并排 + 中间逻辑桥 */
+  .stat-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .stat-duo .stat-block { margin: 0; }
+  .stat-duo .stat-block.stat-violet {
+    background: linear-gradient(135deg, #EFE6FB 0%, #fff 100%);
+    border: 1px solid var(--violet);
+  }
+  .stat-duo .stat-block.stat-violet .stat-num {
+    background: linear-gradient(135deg, #5B3A99, var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .stat-duo .stat-block.stat-violet .stat-source {
+    border-top: 1px solid rgba(91, 58, 153, 0.15);
+  }
+  .stat-bridge {
+    margin: 18px 0 24px;
+    padding: 14px 18px;
+    background: var(--bg);
+    border-left: 3px solid var(--text-3);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .stat-bridge strong { color: var(--text); font-weight: 600; }
+
   .scenario-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -441,6 +473,7 @@
     h1 { font-size: 22px; }
     .stat-block { flex-direction: column; gap: 16px; align-items: flex-start; }
     .stat-num { font-size: 56px; }
+    .stat-duo { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -502,13 +535,27 @@
   <h2>目标用户基数足够大</h2>
   <p>Apple Watch 在 Momcozy 核心市场已是高频穿戴设备,与 Momcozy 高端用户群体存在显著重合。</p>
 
-  <div class="stat-block">
-    <div class="stat-num">30%-33%</div>
-    <div class="stat-info">
-      <p>美国 iPhone 用户中拥有 Apple Watch 的比例</p>
-      <p>覆盖人群规模大,且与 Momcozy 高端目标用户重合度高</p>
-      <p class="stat-source">数据来源:CIRP 2022 · The New Consumer 2025</p>
+  <div class="stat-duo">
+    <div class="stat-block stat-violet">
+      <div class="stat-num">90%</div>
+      <div class="stat-info">
+        <p>Momcozy App 用户中 iPhone 用户的占比</p>
+        <p>我们的用户基本盘几乎就是 iPhone 用户</p>
+        <p class="stat-source">数据来源:Momcozy App 内部数据</p>
+      </div>
     </div>
+    <div class="stat-block">
+      <div class="stat-num">30%-33%</div>
+      <div class="stat-info">
+        <p>美国 iPhone 用户中拥有 Apple Watch 的比例</p>
+        <p>覆盖人群规模大,且与 Momcozy 高端目标用户重合度高</p>
+        <p class="stat-source">数据来源:CIRP 2022 · The New Consumer 2025</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-bridge">
+    <strong>结论:</strong> Momcozy 用户 ≈ iPhone 用户(90%);iPhone 用户中已有约 1/3 在使用 Apple Watch。两组数据交叉,意味着 Apple Watch App 上线即可直接命中 <strong>约 27%-30% 的 Momcozy 存量用户</strong>,无需从零教育市场。
   </div>
 
   <h2>竞品已经在做,我们需要补齐 + 做出差异化</h2>
