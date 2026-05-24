@@ -465,6 +465,198 @@
     border-radius: 6px;
   }
 
+  /* ========== 品线 × 能力 矩阵 ========== */
+  .matrix-wrap {
+    margin: 24px 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .matrix-table th,
+  .matrix-table td {
+    padding: 14px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+  .matrix-table th:last-child,
+  .matrix-table td:last-child { border-right: none; }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .matrix-table thead th {
+    background: var(--bg);
+    font-weight: 600;
+    color: var(--text);
+    font-size: 13px;
+  }
+  .matrix-table tbody th {
+    background: var(--bg);
+    font-weight: 600;
+    text-align: left;
+    color: var(--text);
+    padding-left: 16px;
+    white-space: nowrap;
+  }
+  .matrix-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--pink-deep);
+  }
+  .matrix-none { color: var(--text-3); font-size: 14px; }
+  .matrix-note {
+    font-size: 12px;
+    color: var(--text-3);
+    padding: 10px 16px;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+  }
+  .story-anchor {
+    margin: 16px 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .story-card {
+    padding: 16px 18px;
+    background: linear-gradient(135deg, var(--pink-soft) 0%, #fff 100%);
+    border: 1px solid var(--pink-warm);
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-2);
+  }
+  .story-card strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px; }
+
+  /* ========== 三层分工 ========== */
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .layer {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    padding: 20px 22px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: #fff;
+    align-items: flex-start;
+  }
+  .layer.l1 { background: linear-gradient(135deg, #EFE6FB 0%, #fff 60%); border-color: var(--violet); }
+  .layer.l2 { background: linear-gradient(135deg, var(--pink-soft) 0%, #fff 60%); border-color: var(--pink-warm); }
+  .layer.l3 { background: linear-gradient(135deg, #E6F6F1 0%, #fff 60%); border-color: var(--mint); }
+  .layer-head { font-weight: 600; }
+  .layer-tag { font-size: 11px; color: var(--text-3); letter-spacing: 0.05em; margin-bottom: 4px; text-transform: uppercase; }
+  .layer-name { font-size: 16px; color: var(--text); margin-bottom: 6px; }
+  .layer-owner { font-size: 12px; color: var(--text-2); }
+  .layer-body { font-size: 13.5px; color: var(--text-2); line-height: 1.8; }
+  .layer-body ul { margin: 0 0 8px 18px; padding: 0; }
+  .layer-body li { margin-bottom: 2px; }
+  .layer-think { font-size: 12px; color: var(--text-3); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .layer-think strong { color: var(--text-2); }
+  .layer-note {
+    margin: 14px 0 24px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-left: 3px solid var(--violet);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  /* ========== 端到端协作流 ========== */
+  .e2e-flow {
+    margin: 24px 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .e2e-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 180px;
+    gap: 16px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .e2e-row:last-child { border-bottom: none; }
+  .e2e-step {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--pink-deep);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .e2e-action { font-size: 14px; color: var(--text); }
+  .e2e-owner {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: var(--bg);
+    color: var(--text-2);
+    border: 1px solid var(--line);
+    text-align: center;
+    justify-self: end;
+  }
+  .e2e-owner.platform { background: #EFE6FB; border-color: var(--violet); color: #5B3A99; }
+  .e2e-owner.coord { background: var(--pink-soft); border-color: var(--pink-warm); color: var(--pink-deep); }
+  .e2e-owner.device { background: #E6F6F1; border-color: var(--mint); color: #1F7A60; }
+  .e2e-owner.all { background: #fff; border-color: var(--text-3); color: var(--text-2); }
+
+  /* 方案 B 备选小卡 */
+  .alt-plan {
+    margin: 18px 0 8px;
+    padding: 16px 18px;
+    border: 1px dashed var(--text-3);
+    border-radius: 10px;
+    background: var(--bg);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.75;
+  }
+  .alt-plan-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px;
+    font-weight: 600; color: var(--text);
+  }
+  .alt-plan-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: #fff;
+    border: 1px solid var(--text-3);
+    color: var(--text-3);
+    letter-spacing: 0.05em;
+  }
+  .alt-plan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+    margin-top: 10px;
+    font-size: 12.5px;
+  }
+  .alt-plan-grid .col-h { color: var(--text-3); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 2px; }
+  .alt-plan-conclusion {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--text-3);
+    color: var(--text);
+  }
+  .alt-plan-conclusion strong { color: var(--pink-deep); }
+
   @media (max-width: 768px) {
     .doc { padding: 40px 20px; }
     .scenario-grid { grid-template-columns: 1fr 1fr; }
@@ -479,6 +671,15 @@
     .stat-block { flex-direction: column; gap: 16px; align-items: flex-start; }
     .stat-num { font-size: 56px; }
     .stat-duo { grid-template-columns: 1fr; }
+    .story-anchor { grid-template-columns: 1fr; }
+    .layer { grid-template-columns: 1fr; gap: 10px; padding: 16px 18px; }
+    .e2e-row { grid-template-columns: 36px 1fr; gap: 12px; padding: 12px 14px; }
+    .e2e-row .e2e-owner { grid-column: 1 / -1; justify-self: start; margin-left: 48px; }
+    .e2e-step { width: 28px; height: 28px; font-size: 12px; }
+    .alt-plan-grid { grid-template-columns: 1fr; }
+    .matrix-table { font-size: 12.5px; }
+    .matrix-table th, .matrix-table td { padding: 10px 6px; }
+    .matrix-table tbody th { padding-left: 10px; }
   }
 </style>
 </head>
@@ -679,38 +880,6 @@
     </div>
   </div>
 
-  <h2>平台与品线的分工</h2>
-  <p>Apple Watch App 由 Momcozy App(平台)和各产品线(品线)协作完成。平台提供通用能力底座,品线负责将自己的设备接入这些能力。</p>
-
-  <figure class="report-figure wide-figure">
-    <img src="images/platform-products.png" alt="Apple Watch 展示多设备入口，背景为宝宝和婴儿监护器场景">
-  </figure>
-
-  <div class="role-split">
-    <div class="role-card platform">
-      <span class="role-label">平台</span>
-      <div class="role-name">Momcozy App</div>
-      <div class="role-desc">在 Apple Watch 上构建通用能力底座,提供统一的能力框架供品线接入。</div>
-      <ul>
-        <li>实时操作能力框架</li>
-        <li>训练跟随能力框架</li>
-        <li>提醒推送通道</li>
-        <li>轻量查看数据展示组件</li>
-        <li>表盘组件框架</li>
-      </ul>
-    </div>
-    <div class="role-card line">
-      <span class="role-label">品线</span>
-      <div class="role-name">吸奶器、BBM</div>
-      <div class="role-desc">把自己的设备接入平台提供的能力底座,完成业务层的具体实现。</div>
-      <ul>
-        <li>设备协议适配</li>
-        <li>业务数据定义</li>
-        <li>设备控制面板</li>
-      </ul>
-    </div>
-  </div>
-
   <h2>业务赋能映射</h2>
   <p>五类能力对四个场景组的具体赋能。</p>
 
@@ -751,6 +920,186 @@
         <div class="biz-cap">实况表盘 · 宝宝实时体温及曲线</div>
       </div>
     </div>
+  </div>
+
+  <div class="matrix-wrap">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>实时操作</th>
+          <th>主动提醒</th>
+          <th>轻量查看</th>
+          <th>实况表盘</th>
+          <th>训练跟随</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>吸奶器</th>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-none">—</span></td>
+        </tr>
+        <tr>
+          <th>Baby Monitor</th>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-none">—</span></td>
+        </tr>
+        <tr>
+          <th>孕产康</th>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-none">—</span></td>
+          <td><span class="matrix-dot"></span></td>
+        </tr>
+        <tr>
+          <th>婴儿养护</th>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-none">—</span></td>
+          <td><span class="matrix-dot"></span></td>
+          <td><span class="matrix-none">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="story-anchor">
+    <div class="story-card">
+      <strong>早晨 7 点</strong>抬腕扫一眼,今日吸奶计划、盆底肌训练、宝宝昨晚睡眠时长,30 秒看完全部。
+    </div>
+    <div class="story-card">
+      <strong>下午 2 点</strong>进会议室前抬腕一看,宝宝在家睡得稳,温度贴 36.7℃ 正常,放心把手机静音。
+    </div>
+  </div>
+
+  <h2>三层分工 · 含 AIoT 协同层</h2>
+
+  <figure class="report-figure wide-figure">
+    <img src="images/platform-products.png" alt="Apple Watch 展示多设备入口，背景为宝宝和婴儿监护器场景">
+  </figure>
+
+  <div class="layers">
+    <div class="layer l1">
+      <div class="layer-head">
+        <div class="layer-tag">第一层</div>
+        <div class="layer-name">平台层</div>
+        <div class="layer-owner">归属:APP 中心</div>
+      </div>
+      <div class="layer-body">
+        <ul>
+          <li>Apple Watch 整体产品形态</li>
+          <li>五类通用能力的产品设计与代码实现</li>
+          <li>跨品线信息架构与交互规范</li>
+        </ul>
+        <div class="layer-think"><strong>思考重点:</strong>架构思考 —— 保证全家桶在 Watch 上的一致性</div>
+      </div>
+    </div>
+
+    <div class="layer l2">
+      <div class="layer-head">
+        <div class="layer-tag">第二层 · 协同作业</div>
+        <div class="layer-name">AIoT 协同层</div>
+        <div class="layer-owner">归属:APP 中心 + 品线</div>
+      </div>
+      <div class="layer-body">
+        <ul>
+          <li>派驻 AIoT 团队成员深入品线</li>
+          <li>承接品线特殊场景需求</li>
+          <li>设备业务层实现</li>
+          <li>与品线后端联调</li>
+        </ul>
+        <div class="layer-think"><strong>思考重点:</strong>业务思考 + 架构思考 —— 把品线业务逻辑落到平台能力上</div>
+      </div>
+    </div>
+
+    <div class="layer l3">
+      <div class="layer-head">
+        <div class="layer-tag">第三层</div>
+        <div class="layer-name">设备层</div>
+        <div class="layer-owner">归属:品线</div>
+      </div>
+      <div class="layer-body">
+        <ul>
+          <li>嵌入式软件</li>
+          <li>设备协议</li>
+        </ul>
+        <div class="layer-think"><strong>思考重点:</strong>设备思考 —— 硬件能力与底层协议</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>端到端协作流</h2>
+
+  <div class="e2e-flow">
+    <div class="e2e-row">
+      <div class="e2e-step">1</div>
+      <div class="e2e-action">用户在 Watch 上调档</div>
+      <div class="e2e-owner platform">APP 中心 · 平台层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">2</div>
+      <div class="e2e-action">Watch App 通过 WatchConnectivity 将指令发送至 iPhone App</div>
+      <div class="e2e-owner platform">APP 中心 · 平台层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">3</div>
+      <div class="e2e-action">iPhone App 将用户指令翻译为吸奶器 BLE 协议</div>
+      <div class="e2e-owner coord">AIoT 协同层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">4</div>
+      <div class="e2e-action">iPhone App 通过 BLE 下发指令至设备</div>
+      <div class="e2e-owner platform">APP 中心 · 平台层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">5</div>
+      <div class="e2e-action">设备嵌入式执行调档动作</div>
+      <div class="e2e-owner device">品线 · 设备层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">6</div>
+      <div class="e2e-action">设备通过 BLE Notify 回传新状态</div>
+      <div class="e2e-owner device">品线 · 设备层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">7</div>
+      <div class="e2e-action">iPhone App 通过 WatchConnectivity 推送状态至 Watch</div>
+      <div class="e2e-owner platform">APP 中心 · 平台层</div>
+    </div>
+    <div class="e2e-row">
+      <div class="e2e-step">8</div>
+      <div class="e2e-action">Watch App 实时刷新界面</div>
+      <div class="e2e-owner platform">APP 中心 · 平台层</div>
+    </div>
+    <div class="matrix-note">注:用户无需主动打开 iPhone App。只要 iPhone 解锁过(已是常态),iOS 系统会在 Watch 触发时静默唤醒后台 App 完成中继,全程用户无感。</div>
+  </div>
+
+  <div class="alt-plan">
+    <div class="alt-plan-head">
+      <span class="alt-plan-tag">备选 · 长期演进</span>
+      方案 B:Watch ←→ 设备 直连(BLE)
+    </div>
+    本期采用方案 A(iPhone 中继)为主路径,方案 B(Watch 不经手机、直接通过蓝牙连设备)作为长期演进备选。两者关键差异:
+
+    <div class="alt-plan-grid">
+      <div>
+        <div class="col-h">方案 A · iPhone 中继(本期)</div>
+        延迟 ~300-800ms · 复用 iPhone 已有协议栈 · 几乎零新增 · 依赖 iPhone 在身边
+      </div>
+      <div>
+        <div class="col-h">方案 B · Watch 直连(长期)</div>
+        延迟 ~100-200ms · iPhone 不在身边可用 · 每个品线需重做协议适配 · Watch 电耗高 30-50%
+      </div>
+    </div>
+
   </div>
 
 </div>
