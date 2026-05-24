@@ -49,6 +49,25 @@
     letter-spacing: -0.01em;
   }
 
+  .report-figure {
+    margin: 28px 0 36px;
+  }
+  .report-figure img {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #fff;
+    object-fit: cover;
+  }
+  .cover-figure {
+    margin-bottom: 0;
+  }
+  .cover-figure img,
+  .wide-figure img {
+    aspect-ratio: 16 / 9;
+  }
+
   h1 {
     font-size: 28px;
     font-weight: 600;
@@ -272,6 +291,12 @@
     display: flex;
     justify-content: center;
   }
+  .watch-preview-img {
+    display: block;
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+  }
   .watch-frame {
     width: 150px;
     height: 182px;
@@ -327,6 +352,59 @@
     font-size: 12px;
   }
 
+  /* Apple Watch 硬件能力 → 五类通用能力 的推导图 */
+  .deriv-flow {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 18px;
+    align-items: center;
+    margin: 24px 0 32px;
+    padding: 28px;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--line);
+  }
+  .deriv-col h4 {
+    font-size: 12px;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .deriv-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .deriv-item {
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .deriv-item .hint {
+    display: block;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+  .deriv-col.right .deriv-item {
+    background: var(--pink-soft);
+    color: var(--pink-deep);
+    font-weight: 600;
+  }
+  .deriv-arrow {
+    text-align: center;
+    font-size: 28px;
+    color: var(--pink-warm);
+  }
+
   /* 业务赋能 */
   .biz-grid {
     display: grid;
@@ -357,9 +435,12 @@
   @media (max-width: 768px) {
     .doc { padding: 40px 20px; }
     .scenario-grid { grid-template-columns: 1fr 1fr; }
-    .compare, .biz-grid, .quote-grid, .role-split { grid-template-columns: 1fr; }
+    .compare, .biz-grid, .quote-grid, .role-split, .deriv-flow { grid-template-columns: 1fr; }
+    .deriv-arrow { transform: rotate(90deg); }
     .cap-detail { grid-template-columns: 1fr; text-align: center; }
     .cap-detail-content { text-align: left; }
+    .watch-preview-img { width: min(220px, 72vw); height: auto; }
+    .report-figure { margin: 22px 0 28px; }
     .doc-title { font-size: 26px; }
     h1 { font-size: 22px; }
     .stat-block { flex-direction: column; gap: 16px; align-items: flex-start; }
@@ -373,6 +454,9 @@
 
   <div class="doc-header">
     <div class="doc-title">Momcozy App for Apple Watch</div>
+    <figure class="report-figure cover-figure">
+      <img src="images/cover.png" alt="妈妈使用 Momcozy 吸奶器，Apple Watch 与 iPhone 展示 Time to breastfeed 控制界面">
+    </figure>
   </div>
 
   <h1>一、为什么要做 Apple Watch App</h1>
@@ -461,8 +545,102 @@
 
   <h1>二、我们打算怎么做</h1>
 
+  <h2>五类通用能力</h2>
+  <p>基于 Apple Watch 硬件本身的几种特性,平台在手表上构建五类通用能力。每一类能力都对应到 Apple Watch 区别于手机的物理优势。</p>
+
+  <figure class="report-figure wide-figure">
+    <img src="images/ecosystem.png" alt="Apple Watch 居中展示 Devices 列表，周围环绕 Momcozy 全家桶产品">
+  </figure>
+
+  <div class="deriv-flow">
+    <div class="deriv-col">
+      <h4>Apple Watch 硬件特性</h4>
+      <div class="deriv-items">
+        <div class="deriv-item">戴在手腕上<span class="hint">抬手即看、抬手即操作</span></div>
+        <div class="deriv-item">震动反馈<span class="hint">触觉直达,不打扰他人</span></div>
+        <div class="deriv-item">小屏聚焦<span class="hint">信息高度精简</span></div>
+        <div class="deriv-item">表盘组件<span class="hint">不打开 App 也能瞥见信息</span></div>
+      </div>
+    </div>
+    <div class="deriv-arrow">→</div>
+    <div class="deriv-col right">
+      <h4>对应的五类通用能力</h4>
+      <div class="deriv-items">
+        <div class="deriv-item">实时操作</div>
+        <div class="deriv-item">主动提醒</div>
+        <div class="deriv-item">轻量查看</div>
+        <div class="deriv-item">被动触达</div>
+        <div class="deriv-item">训练跟随</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <img class="watch-preview-img" src="images/realtime-operation.png" alt="Apple Watch 显示双侧吸乳容量和档位控制">
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">01</div>
+      <div class="cap-detail-name">实时操作</div>
+      <div class="cap-detail-desc">使用设备过程中,在手腕上完成给设备发指令、调档、暂停结束等操作,同时实时查看设备状态数据。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶器(控制吸奶过程)、BBM(安抚音乐一键播放/暂停)、按摩仪、光疗仪、电动摇椅、白噪音音箱、雾化器</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <img class="watch-preview-img" src="images/active-reminder.png" alt="Apple Watch 推送 Time to breastfeed 主动提醒">
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">02</div>
+      <div class="cap-detail-name">主动提醒</div>
+      <div class="cap-detail-desc">计划/异常/完成事件通过震动主动推送到手腕。震动反馈天然比手机通知更难错过,尤其适合夜间和异常告警场景。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶器(到点吸奶提醒)、BBM(智能告警含抓拍图 + 事件总结、宝宝状态变化通知、每日睡眠报告推送)、训练日程、温度贴异常告警、调奶器/暖奶器/清洗机完成提醒</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <img class="watch-preview-img" src="images/glance-view.png" alt="Apple Watch 显示 Next Pump、容量条和 To-Do 入口">
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">03</div>
+      <div class="cap-detail-name">轻量查看</div>
+      <div class="cap-detail-desc">抬腕快速确认关键状态数据,无需打开手机。包括吸奶记录、宝宝体温、妈妈和宝宝的产后/周龄状态、今日待办等。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶器(吸奶数据、当日吸奶计划)、BBM(实时呼吸/心率/状态、历史记录、告警列表与图片预览、睡眠报告)、当前体温、产后周数、宝宝周龄、今日待办、训练记录、哺乳记录、温度曲线</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <img class="watch-preview-img" src="images/passive-complication.png" alt="Apple Watch 表盘组件显示 Next Pump 15 mins later">
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">04</div>
+      <div class="cap-detail-name">被动触达</div>
+      <div class="cap-detail-desc">不需要打开 App,关键信息直接显示在表盘上。妈妈日常看时间时即可瞥到 Momcozy 的核心数据。</div>
+      <div class="cap-products"><strong>挂载产品</strong>吸奶器(下次吸奶时间、上次吸奶容量)、BBM(宝宝呼吸/心率/实时状态、安抚音乐快捷开关)、待办数量、异常告警状态、当前体温、产后周数</div>
+    </div>
+  </div>
+
+  <div class="cap-detail">
+    <div class="cap-detail-preview">
+      <img class="watch-preview-img" src="images/training-follow.png" alt="Apple Watch 显示盆底肌训练 Relax 倒计时和暂停按钮">
+    </div>
+    <div class="cap-detail-content">
+      <div class="cap-num">05</div>
+      <div class="cap-detail-name">训练跟随</div>
+      <div class="cap-detail-desc">训练全程在手表上呈现当前阶段、阶段倒计时、下一阶段预告,配合震动节奏引导,妈妈脱离手机即可完成训练。</div>
+      <div class="cap-products"><strong>挂载产品</strong>盆底肌修复仪训练、腰腹按摩仪程序、其他孕产康训练课程</div>
+    </div>
+  </div>
+
   <h2>平台与品线的分工</h2>
-  <p>Apple Watch App 由 App 生态中心(平台)和各产品线(品线)协作完成。平台提供通用能力底座,品线负责将自己的设备接入这些能力。</p>
+  <p>Apple Watch App 由 Momcozy App(平台)和各产品线(品线)协作完成。平台提供通用能力底座,品线负责将自己的设备接入这些能力。</p>
+
+  <figure class="report-figure wide-figure">
+    <img src="images/platform-products.png" alt="Apple Watch 展示多设备入口，背景为宝宝和婴儿监护器场景">
+  </figure>
 
   <div class="role-split">
     <div class="role-card platform">
@@ -489,71 +667,12 @@
     </div>
   </div>
 
-  <h2>五类通用能力</h2>
-  <p>基于 Apple Watch 的硬件特性(戴在手腕、震动反馈、小屏抬腕即看、表盘组件),平台在手表上构建五类通用能力,品线的硬件按需挂载到这些能力上。</p>
-
-  <div class="cap-detail">
-    <div class="cap-detail-preview">
-      <div class="watch-frame"><div class="watch-screen">实时操作<br>预览图待补充</div></div>
-    </div>
-    <div class="cap-detail-content">
-      <div class="cap-num">01</div>
-      <div class="cap-detail-name">实时操作</div>
-      <div class="cap-detail-desc">使用设备过程中,在手腕上完成给设备发指令、调档、暂停结束等操作,同时实时查看设备状态数据。</div>
-      <div class="cap-products"><strong>挂载产品</strong>吸奶器(控制吸奶过程)、BBM(安抚音乐一键播放/暂停)、按摩仪、光疗仪、电动摇椅、白噪音音箱、雾化器</div>
-    </div>
-  </div>
-
-  <div class="cap-detail">
-    <div class="cap-detail-preview">
-      <div class="watch-frame"><div class="watch-screen">主动提醒<br>预览图待补充</div></div>
-    </div>
-    <div class="cap-detail-content">
-      <div class="cap-num">02</div>
-      <div class="cap-detail-name">主动提醒</div>
-      <div class="cap-detail-desc">计划/异常/完成事件通过震动主动推送到手腕。震动反馈天然比手机通知更难错过,尤其适合夜间和异常告警场景。</div>
-      <div class="cap-products"><strong>挂载产品</strong>吸奶器(到点吸奶提醒)、BBM(智能告警含抓拍图 + 事件总结、宝宝状态变化通知、每日睡眠报告推送)、训练日程、温度贴异常告警、调奶器/暖奶器/清洗机完成提醒</div>
-    </div>
-  </div>
-
-  <div class="cap-detail">
-    <div class="cap-detail-preview">
-      <div class="watch-frame"><div class="watch-screen">轻量查看<br>预览图待补充</div></div>
-    </div>
-    <div class="cap-detail-content">
-      <div class="cap-num">03</div>
-      <div class="cap-detail-name">轻量查看</div>
-      <div class="cap-detail-desc">抬腕快速确认关键状态数据,无需打开手机。包括吸奶记录、宝宝体温、妈妈和宝宝的产后/周龄状态、今日待办等。</div>
-      <div class="cap-products"><strong>挂载产品</strong>吸奶器(吸奶数据、当日吸奶计划)、BBM(实时呼吸/心率/状态、历史记录、告警列表与图片预览、睡眠报告)、当前体温、产后周数、宝宝周龄、今日待办、训练记录、哺乳记录、温度曲线</div>
-    </div>
-  </div>
-
-  <div class="cap-detail">
-    <div class="cap-detail-preview">
-      <div class="watch-frame"><div class="watch-screen">被动触达<br>预览图待补充</div></div>
-    </div>
-    <div class="cap-detail-content">
-      <div class="cap-num">04</div>
-      <div class="cap-detail-name">被动触达</div>
-      <div class="cap-detail-desc">不需要打开 App,关键信息直接显示在表盘上。妈妈日常看时间时即可瞥到 Momcozy 的核心数据。</div>
-      <div class="cap-products"><strong>挂载产品</strong>吸奶器(下次吸奶时间、上次吸奶容量)、BBM(宝宝呼吸/心率/实时状态、安抚音乐快捷开关)、待办数量、异常告警状态、当前体温、产后周数</div>
-    </div>
-  </div>
-
-  <div class="cap-detail">
-    <div class="cap-detail-preview">
-      <div class="watch-frame"><div class="watch-screen">训练跟随<br>预览图待补充</div></div>
-    </div>
-    <div class="cap-detail-content">
-      <div class="cap-num">05</div>
-      <div class="cap-detail-name">训练跟随</div>
-      <div class="cap-detail-desc">训练全程在手表上呈现当前阶段、阶段倒计时、下一阶段预告,配合震动节奏引导,妈妈脱离手机即可完成训练。</div>
-      <div class="cap-products"><strong>挂载产品</strong>盆底肌修复仪训练、腰腹按摩仪程序、其他孕产康训练课程</div>
-    </div>
-  </div>
-
   <h2>业务赋能映射</h2>
   <p>五类能力对四个场景组的具体赋能。</p>
+
+  <figure class="report-figure wide-figure">
+    <img src="images/business-enablement.png" alt="Apple Watch 居中展示 Devices 列表，两侧展开多个业务线产品">
+  </figure>
 
   <div class="biz-grid">
     <div class="biz-card b1">
