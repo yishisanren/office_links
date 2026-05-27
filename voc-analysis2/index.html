@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4 月底设备配网及重连失败客诉问题及后续举措</title>
+<title>4 月底 5 月初设备配网客诉问题及后续改善</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -638,7 +638,7 @@
 
   <!-- 报告头 -->
   <header>
-    <h1 class="report-title">4 月底设备配网及重连失败客诉问题及后续举措</h1>
+    <h1 class="report-title">4 月底 5 月初设备配网客诉问题及后续改善</h1>
   </header>
 
   <!-- 问题发生过程 -->
@@ -649,7 +649,7 @@
   <div class="info-block">
     <div class="info-label">表现</div>
     <div class="info-content">
-      美东时间 04.21 中午 12:30 起，正值海外用户使用高峰。后端服务出现间歇性不可用，<strong>设备配网与重连均失败</strong>，用户体验受到直接影响。客诉与差评在数小时内集中浮现。
+      05.08 当天 <strong>15:00–20:00</strong>，App 后端服务因 Redis 满载出现异常，<strong>设备配网失败</strong>等后端依赖功能受到影响，用户反馈集中浮现。
     </div>
   </div>
 
@@ -658,16 +658,16 @@
     <div class="info-content">
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-time">04.21 · 12:30</div>
-          <div class="timeline-desc">后端服务开始间歇性不可用，配网与重连陆续失败。</div>
+          <div class="timeline-time">05.08 · 15:00</div>
+          <div class="timeline-desc">App 后端服务 Redis 出现满载，设备配网等依赖功能陆续失败，用户反馈开始集中。</div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-time">04.21 · 19:30</div>
-          <div class="timeline-desc">海外进入低峰时段，服务自然恢复（流量回落使数据库压力解除）。</div>
+          <div class="timeline-time">05.08 · 20:00</div>
+          <div class="timeline-desc">完成 Redis 异常使用点的修复与回收，<strong>后端服务恢复</strong>，问题已根治。</div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-time">04.21 · 23:30</div>
-          <div class="timeline-desc">DBA 完成索引补充，问题<strong>彻底解决</strong>。</div>
+          <div class="timeline-time">事故后</div>
+          <div class="timeline-desc">已上线<strong>服务降级保障机制</strong>：再出现类似后端压力场景时，系统将<strong>自动优先保障配网、设备控制等 IoT 核心功能可用</strong>。</div>
         </div>
       </div>
     </div>
@@ -687,9 +687,9 @@
         <div class="layer-tag">表层</div>
       </div>
       <div class="cause-body">
-        <div class="cause-title">云端接口异常，设备配网与重连失败</div>
+        <div class="cause-title">App 后端服务异常，设备配网失败</div>
         <div class="cause-text">
-          海外用户高峰期，某个云端接口大量超时与报错，连锁拖累依赖该接口的配网与重连链路。这是<strong>用户直接感知到的现象</strong>。
+          5.8 当天 15:00–20:00，App 后端服务出现异常，连锁拖累依赖后端的配网链路，设备配网失败。这是<strong>用户直接感知到的现象</strong>。
         </div>
       </div>
     </div>
@@ -701,9 +701,9 @@
         <div class="layer-tag">直接原因</div>
       </div>
       <div class="cause-body">
-        <div class="cause-title">设备表 14 万量级 + 未建索引，慢查询拖垮数据库</div>
+        <div class="cause-title">社区功能接口异常使用 Redis，导致 Redis 满载</div>
         <div class="cause-text">
-          该异常接口依赖了一个对设备表的查询。当天设备表数据达到 <strong>14 万量级</strong>，且该查询<strong>未建立对应索引</strong>，在海外高峰流量下数据库查询性能急剧下降，最终拖垮数据库。
+          App 后端服务的社区功能接口存在<strong>对 Redis 的异常使用方式</strong>，在当日流量下迅速把 Redis 打满。Redis 作为后端核心依赖一旦满载，<strong>包括设备配网在内的多个后端依赖功能均受到波及</strong>。
         </div>
       </div>
     </div>
@@ -715,9 +715,9 @@
         <div class="layer-tag">根本原因</div>
       </div>
       <div class="cause-body">
-        <div class="cause-title">慢查询监控与处理流程仍有建设空间</div>
+        <div class="cause-title">非核心业务可拖垮 IoT 核心功能，缺少服务降级保障</div>
         <div class="cause-text">
-          设备表数据量级是<strong>渐进增长</strong>而非跳跃式 —— 这意味着如果当时具备慢查询监控指标，<strong>接口性能下滑应能在事故前几天就被发现</strong>，而不必等到数据库压力集中爆发的时点。
+          社区属于非核心业务，却能<strong>把配网、设备控制等 IoT 核心功能一同拖下水</strong> —— 反映出当时<strong>缺少按业务优先级的服务降级与隔离机制</strong>。后端一旦出现压力，没有兜底策略优先保住 IoT 核心链路的可用性。
         </div>
       </div>
     </div>
@@ -828,14 +828,14 @@
           <div class="action-tag">兜底保护 · 非核心服务不能拖垮核心</div>
         </div>
       </div>
-      <span class="action-status status-planned">已排期开发</span>
+      <span class="action-status status-done">已上线</span>
     </div>
     <div class="action-body">
       <p class="action-text">
-        所有接口按业务优先级启动<strong>逐级熔断机制</strong>。当非核心服务出问题时，<strong>不会导致核心服务连锁故障</strong>；若极端情况下核心服务仍受影响，将<strong>挂牌告知用户</strong>，避免无声失效。
+        所有接口按业务优先级启动<strong>逐级熔断与降级机制</strong>。当非核心服务（如社区）出问题时，<strong>不会导致配网、设备控制等 IoT 核心服务连锁故障</strong>；若极端情况下核心服务仍受影响，将<strong>挂牌告知用户</strong>，避免无声失效。
       </p>
       <p class="action-text">
-        方案已制定并完成排期，正在开发实施中。
+        该机制已在 <strong>5.8 事故后上线</strong>，后续如出现类似后端压力场景，系统会<strong>自动优先保障配网、设备控制等 IoT 核心功能的可用性</strong>。
       </p>
       <div class="ref-list">
         <a href="https://alidocs.dingtalk.com/i/nodes/6LeBq413JAeybbj4ur4dvYmQJDOnGvpb" class="ref-link" target="_blank">
