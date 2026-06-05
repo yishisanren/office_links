@@ -1,0 +1,242 @@
+<!-- taste-skill · internal report · VARIANCE 4 / MOTION 1 / DENSITY 6 · single accent ink-blue · no gradient -->
+<meta charset="utf-8">
+<title>2026 上半年 APP 配网失败 VOC 问题拆分</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg:#ffffff; --bg-2:#f6f7f9; --bg-3:#eef0f3;
+    --ink:#15181d; --ink-2:#414853; --ink-3:#7b828d;
+    --line:#e3e6ea; --line-2:#cdd2d9;
+    --accent:#1f4e79; --accent-2:#2f6aa3; --accent-soft:#1f4e790f;
+    --red:#a23b34; --amber:#9a6b1f; --slate:#5f6670; --green:#3f6b4a;
+    --sans:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei Light","Microsoft YaHei",system-ui,sans-serif;
+    --mono:"SF Mono","JetBrains Mono","Roboto Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:clip}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:48px 30px 72px;}
+
+  /* header */
+  .head{padding-bottom:22px;border-bottom:2px solid var(--ink);}
+  .head h1{font-size:clamp(24px,4vw,33px);font-weight:600;letter-spacing:-.02em;line-height:1.18;}
+  .head .stat-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:22px;border:1px solid var(--line-2);border-radius:4px;overflow:hidden;}
+  .stat{flex:1;min-width:120px;padding:13px 16px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:0;}
+  .stat .v{font-size:23px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1;}
+  .stat .l{font-size:12px;color:var(--ink-3);margin-top:6px;}
+
+  section{margin-top:42px;}
+  .sec-h{display:flex;align-items:baseline;gap:11px;margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--line);}
+  .sec-h .no{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:600;}
+  .sec-h h2{font-size:19px;font-weight:600;letter-spacing:-.01em;}
+  p{color:var(--ink-2);margin-bottom:12px;}
+  strong{color:var(--ink);font-weight:600;}
+
+  /* journey */
+  .journey{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:4px 0;}
+  .jstep{background:var(--bg-2);border:1px solid var(--line);border-radius:4px;padding:11px 12px;position:relative;}
+  .jstep .n{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:600;}
+  .jstep .t{font-size:12.5px;color:var(--ink);font-weight:600;margin-top:5px;line-height:1.35;}
+  .jstep .d{font-size:11.5px;color:var(--ink-3);margin-top:3px;line-height:1.35;}
+
+  /* overview bars */
+  .bars{margin-top:6px;}
+  .brow{display:flex;align-items:center;gap:14px;padding:9px 0;}
+  .blab{width:212px;flex-shrink:0;text-align:right;font-size:13.5px;color:var(--ink);font-weight:700;line-height:1.3;}
+  .btrack{flex:1;min-width:0;background:var(--bg-3);border-radius:3px;height:30px;position:relative;display:flex;align-items:center;}
+  .bfill{height:30px;border-radius:3px;display:flex;align-items:center;justify-content:flex-end;padding-right:11px;min-width:30px;position:relative;}
+  .bfill span{font-size:13px;color:#fff;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .bfill.out{padding-right:0;}
+  .bfill.out span{color:var(--ink);position:absolute;left:calc(100% + 9px);}
+
+  /* voice blocks */
+  .vblock{margin-bottom:22px;}
+  .vhead{display:flex;align-items:center;gap:10px;padding:9px 0 8px;border-bottom:1.5px solid var(--line-2);}
+  .vstrip{width:4px;height:16px;border-radius:2px;flex-shrink:0;}
+  .vno{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);}
+  .vnm{font-size:15px;font-weight:600;color:var(--ink);}
+  .vct{margin-left:auto;font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .vnote{font-size:12.5px;color:var(--ink-2);line-height:1.5;margin:7px 0 2px;padding-left:13px;}
+  .vnote b{color:var(--accent);font-weight:600;}
+  .vtab{width:100%;border-collapse:collapse;margin:0;}
+  .vtab td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top;}
+  .vtab tr:last-child td{border-bottom:0;}
+  .vmeta{width:64px;flex-shrink:0;padding-right:12px !important;white-space:nowrap;}
+  .vspu{display:inline-block;font-size:11.5px;font-weight:600;color:var(--accent);font-family:var(--mono);}
+  .vym{display:block;font-size:11px;color:var(--ink-3);margin-top:2px;}
+  .vq{font-size:13.5px;color:var(--ink-2);line-height:1.6;}
+  .vq b{color:var(--ink);font-weight:600;background:var(--accent-soft);border-radius:2px;padding:0 3px;}
+
+  /* rules table */
+  table{width:100%;border-collapse:collapse;margin-top:18px;font-size:13px;}
+  caption{text-align:left;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:9px;}
+  th{text-align:left;font-size:11.5px;font-weight:600;color:var(--ink-3);border-bottom:1.5px solid var(--line-2);padding:8px 11px;}
+  td{padding:9px 11px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top;}
+  td.tag{color:var(--accent);font-weight:600;white-space:nowrap;}
+  tr:last-child td{border-bottom:0;}
+  td code{font-family:var(--mono);font-size:12px;color:var(--ink);}
+
+  .foot{margin-top:48px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3);line-height:1.6;}
+
+  @media(max-width:680px){
+    .wrap{padding:34px 16px 52px;}
+    .journey{grid-template-columns:repeat(2,1fr);}
+    .grid{grid-template-columns:1fr;}
+    .blab{width:130px;font-size:12px;}
+    .stat{min-width:calc(50% - .5px);}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <h1>2026 上半年 APP 配网失败 VOC 问题拆分</h1>
+    <div class="stat-strip">
+      <div class="stat"><div class="v">487</div><div class="l">VOC 总量</div></div>
+      <div class="stat"><div class="v">10</div><div class="l">问题分类</div></div>
+      <div class="stat"><div class="v">6</div><div class="l">覆盖型号</div></div>
+      <div class="stat"><div class="v">2026.1-5月</div><div class="l">数据范围</div></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-h"><span class="no">01</span><h2>分类思路：沿用户使用旅程划分</h2></div>
+    <p>不按问题轻重，而是顺着用户从拿到设备到用上 App 的每一步，看客诉卡在哪个节点。每个卡点对应一类标签，直接落到一个责任方。</p>
+    <div class="journey">
+      <div class="jstep"><div class="n">01</div><div class="t">买到设备</div><div class="d">型号是否支持 App</div></div>
+      <div class="jstep"><div class="n">02</div><div class="t">打开蓝牙</div><div class="d">会不会开</div></div>
+      <div class="jstep"><div class="n">03</div><div class="t">进入配对态</div><div class="d">蓝牙是否广播</div></div>
+      <div class="jstep"><div class="n">04</div><div class="t">搜索</div><div class="d">App 是否找到</div></div>
+      <div class="jstep"><div class="n">05</div><div class="t">绑定握手</div><div class="d">是否连得上</div></div>
+      <div class="jstep"><div class="n">06</div><div class="t">持续使用</div><div class="d">是否掉线</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><span class="no">02</span><h2>十类问题的客诉量占比</h2></div>
+    <div class="bars">
+      <div class="brow"><div class="blab">非智能设备无法接入 App</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--slate)"><span>138 · 28.3%</span></div></div></div>
+      <div class="brow"><div class="blab">信息缺失无法定位</div><div class="btrack"><div class="bfill" style="width:91.3%;background:var(--slate)"><span>126 · 25.9%</span></div></div></div>
+      <div class="brow"><div class="blab">App 发现设备但绑定失败</div><div class="btrack"><div class="bfill" style="width:39.9%;background:var(--accent)"><span>55 · 11.3%</span></div></div></div>
+      <div class="brow"><div class="blab">扫码无效</div><div class="btrack"><div class="bfill" style="width:34.1%;background:var(--accent)"><span>47 · 9.7%</span></div></div></div>
+      <div class="brow"><div class="blab">服务器异常</div><div class="btrack"><div class="bfill" style="width:32.6%;background:var(--red)"><span>45 · 9.2%</span></div></div></div>
+      <div class="brow"><div class="blab">设备绑定成功后续连不上 App</div><div class="btrack"><div class="bfill" style="width:25.4%;background:var(--amber)"><span>35 · 7.2%</span></div></div></div>
+      <div class="brow"><div class="blab">App 搜不到设备</div><div class="btrack"><div class="bfill out" style="width:10.1%;background:var(--accent)"><span>14 · 2.9%</span></div></div></div>
+      <div class="brow"><div class="blab">咨询如何打开蓝牙（W1）</div><div class="btrack"><div class="bfill out" style="width:7.2%;background:var(--green)"><span>10 · 2.1%</span></div></div></div>
+      <div class="brow"><div class="blab">其他</div><div class="btrack"><div class="bfill out" style="width:7.2%;background:var(--slate)"><span>10 · 2.1%</span></div></div></div>
+      <div class="brow"><div class="blab">设备无法进入配对状态</div><div class="btrack"><div class="bfill out" style="width:5.1%;background:var(--accent)"><span>7 · 1.4%</span></div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><span class="no">03</span><h2>分类详细拆解</h2></div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--slate)"></span><span class="vno">类目 01</span><span class="vnm">非智能设备无法接入 App</span><span class="vct">138 条 · 28.3%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">M5</span><span class="vym">05月</span></td><td class="vq">用Momcozy M5吸奶器想和App同步，设备一直识别不到，客服说<b>标准版M5不支持App连接</b>，只有M5 Smart才行。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5</span><span class="vym">05月</span></td><td class="vq">在Target买的M5根本没法用App，<b>蓝牙搜不到设备</b>，手动扫二维码又提示<b>无法识别</b>，否则就要退货了。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5</span><span class="vym">05月</span></td><td class="vq">去年黑五买的泵现在装好却<b>蓝牙连不上</b>，开关、删重装都试遍了，扫机器上的<b>二维码也说无效</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M6</span><span class="vym">05月</span></td><td class="vq">BP311（M6）吸奶器连不上App，客服确认<b>这个型号根本不支持App连接</b>，和M9、Air1那些能连的型号不一样。</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--green)"></span><span class="vno">类目 02</span><span class="vnm">咨询如何打开蓝牙（W1）</span><span class="vct">10 条 · 2.1%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">05月</span></td><td class="vq">刚买了Wellness 1，按说明把<b>模式键和加热键各按5次</b>想连iPhone的App，可还是连不上，到底该怎么连？</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">05月</span></td><td class="vq">一直想把泵连到App可怎么都不行，照着教程做完，泵上<b>根本不显示蓝牙信号</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">04月</span></td><td class="vq">去年12月订的W1，听说能连App，照着指南每一步都做了，可泵屏幕上<b>那个b一直出不来</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">04月</span></td><td class="vq">抢先订的Wellness 1有蓝牙图标却连不上，别人同期买的都能连，现在我的<b>蓝牙图标也不像以前那样亮了</b>。</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--accent)"></span><span class="vno">类目 03</span><span class="vnm">设备无法进入配对状态</span><span class="vct">7 条 · 1.4%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">M9</span><span class="vym">04月</span></td><td class="vq">M9能正常开机、显示计时和模式，可<b>蓝牙图标从头到尾都不出现</b>，设备根本进不了配对模式，也连不上App。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M9</span><span class="vym">02月</span></td><td class="vq">想用蓝牙连M9却一直报错，<b>吸奶器上也没有蓝牙标志</b>，从App里删了再重连，怎么弄都不行。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">04月</span></td><td class="vq">英国亚马逊买的Air1，<b>右边的泵连不上App</b>，泵本身能开关、按键也正常，可没法连所以也没法在App里重置。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">01月</span></td><td class="vq">刚拆开吸奶器就发现<b>传感器有问题，左边的泵在App里完全不显示</b>，能不能在保修内换一台新的？</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--accent)"></span><span class="vno">类目 04</span><span class="vnm">扫码无效</span><span class="vct">47 条 · 9.7%</span></div>
+        <div class="vnote">可能原因：<b>W1 首批设备二维码格式与后续设备格式不同</b>，导致扫码报错；用户买到 <b>M5（不能接入 App）</b>，以为买到的是 M5 Smart。</div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">05月</span></td><td class="vq">重启手机、开关蓝牙、充满电、扫电机上的二维码都试了，可一扫码就提示<b>产品型号不匹配</b>，没法连。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">05月</span></td><td class="vq">今天在Target买的W1连不上App，扫二维码一直说<b>二维码无效</b>，删了重装App也不行，手机iPhone 17 Pro。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">04月</span></td><td class="vq">Wellness 1扫背面二维码报<b>产品型号不匹配</b>，在「其他绑定方式」手动选W1也不行，蓝牙也开着。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">05月</span></td><td class="vq">两个设备只连上一个，<b>灰色那个一直说二维码无效</b>，另一个没问题，请帮我看看。</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--accent)"></span><span class="vno">类目 05</span><span class="vnm">App 搜不到设备</span><span class="vct">14 条 · 2.9%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">04月</span></td><td class="vq">帮妻子连M5 Smart，蓝牙和两个二维码都试了：<b>蓝牙搜不到泵</b>，扫码又返回<b>无效代码</b>，刚在沃尔玛买的。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">03月</span></td><td class="vq">刚收到M5 Smart想连App办延保，可它<b>死活不通过蓝牙配对</b>，蓝牙明明开着，我和老公的手机都<b>搜不到它</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">04月</span></td><td class="vq">Air1明明开着机又靠近手机，<b>App就是搜不到这个设备</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">02月</span></td><td class="vq">M5<b>怎么都配不上对、一点反应都没有</b>，像系统处理器有问题，扫码和蓝牙折腾了整整一个小时。</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--accent)"></span><span class="vno">类目 06</span><span class="vnm">App 发现设备但绑定失败</span><span class="vct">55 条 · 11.3%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">M9</span><span class="vym">04月</span></td><td class="vq">开泵后App好像能检测到，但一直连不上，反复报<b>「(E204) 连接设备失败，请重置设备后重试」</b>，电池都是满的。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">04月</span></td><td class="vq">订的M5 smart连不上App，<b>一直给E204错误</b>，手机和泵重启了好多次，App和系统也都是最新的。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">05月</span></td><td class="vq">Air1连手机时<b>进度停在49%</b>就连不下去了，App、固件都更新过，蓝牙权限也查了还是不行。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">05月</span></td><td class="vq">刚收到W1连不上App，扫二维码配对时<b>到了90%就提示配对失败</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">04月</span></td><td class="vq">开泵后App能扫到、能找到泵，可一配对就显示<b>「连接失败」</b>，以为泵坏了换了新的，结果新泵照样连不上。</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--amber)"></span><span class="vno">类目 07</span><span class="vnm">设备绑定成功后续连不上 App</span><span class="vct">35 条 · 7.2%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">05月</span></td><td class="vq">保险买的Air1用了两个月<b>今天突然连不上手机了</b>，之前一直没问题，删了重配只能<b>到52%就提示失败</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M9</span><span class="vym">04月</span></td><td class="vq">M9 mobile flow刚用了一周左右就<b>从App断开、再也连不回来</b>，重置设备、检查蓝牙都试过了。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">04月</span></td><td class="vq">Air1用了快6个月一直靠App记录，今天去泵奶<b>所有记录突然全没了、App也连不上泵</b>，电满着蓝牙也开着。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">05月</span></td><td class="vq">已经<b>两周连不上App</b>了，什么办法都试遍了还是没成功，能帮帮我吗？</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--red)"></span><span class="vno">类目 08</span><span class="vnm">服务器异常</span><span class="vct">45 条 · 9.2%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">05月</span></td><td class="vq">iPhone升到iOS 26.4.2后<b>App打不开泵奶记录、连不上泵，提示server error 504</b>，真不想丢掉去年的数据。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">04月</span></td><td class="vq">M5 Smart蓝牙突然连不上App了，<b>一直提示「设备不存在(device does not exist)」</b>，开关蓝牙、重启、更新都试过。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">04月</span></td><td class="vq">今天Air1突然出问题：蓝牙连不上、设置里也搜不到它，一打开App就一直<b>提示「server error」</b>，还显示离线。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">05月</span></td><td class="vq">不到一个月App又一次崩了，反复的<b>服务器错误和连接故障</b>害我好几天没法正常用Air1，泵将近400美元太不能接受。</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--slate)"></span><span class="vno">类目 09</span><span class="vnm">信息缺失无法定位</span><span class="vct">126 条 · 25.9%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">05月</span></td><td class="vq">我几乎什么都试过了，<b>就是没法把泵连到手机App上</b>。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">05月</span></td><td class="vq">那对M5 Smart连不上App，<b>iPhone 14 Pro和iPhone 12都试了都没办法</b>，网页聊天说的步骤也都照做了。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">W1</span><span class="vym">05月</span></td><td class="vq">别人送的Wellness 1，已经把<b>一个泵连上App了，第二个怎么都连不上</b>，照着视频做还是不行。</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">05月</span></td><td class="vq">别人送的Air1，<b>右边的泵连不上App，左边没问题</b>，没有收据也没别的凭证，还有办法吗？</td></tr>
+        </tbody></table>
+      </div>
+      <div class="vblock">
+        <div class="vhead"><span class="vstrip" style="background:var(--slate)"></span><span class="vno">类目 10</span><span class="vnm">其他</span><span class="vct">10 条 · 2.1%</span></div>
+        <table class="vtab"><tbody>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">05月</span></td><td class="vq">刚买的M5 smart绑不了设备，<b>明明是第一次连却说已经有另一个账号绑定了它们</b>，能帮我处理吗？</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M5Smart</span><span class="vym">02月</span></td><td class="vq">在Facebook买的二手M5想连App，<b>会不会还连着原主人的账号</b>？有没有办法覆盖掉重新绑定？</td></tr>
+          <tr><td class="vmeta"><span class="vspu">Air1</span><span class="vym">05月</span></td><td class="vq">又买了第二对Air1放育儿室，可配第二对时<b>提示「已达此设备上限」</b>，有没有办法绕过？</td></tr>
+          <tr><td class="vmeta"><span class="vspu">M9</span><span class="vym">05月</span></td><td class="vq">咨询M9的<b>App激活码</b>问题，买的时候没注意要激活码、包装又丢了，注册时一直<b>要求输入激活码</b>才能用。</td></tr>
+        </tbody></table>
+      </div>
+
+    <table>
+      <caption>易混标签判定优先级（客服打标 SOP）</caption>
+      <tr><th>当原声同时出现……</th><th>判给</th></tr>
+      <tr><td>二维码 invalid / 型号不匹配（哪怕也说蓝牙连不上）</td><td class="tag">扫码无效</td></tr>
+      <tr><td><code>504</code> / 超时 / <code>device does not exist</code></td><td class="tag">服务器异常</td></tr>
+      <tr><td>之前能用、突然连不上</td><td class="tag">后续连不上</td></tr>
+      <tr><td>蓝牙图标不亮（M9 / Air1）</td><td class="tag">进不去配对</td></tr>
+      <tr><td>蓝牙图标不亮（W1，问怎么按键出 B）</td><td class="tag">咨询开蓝牙</td></tr>
+    </table>
+  </section>
+
+  <div class="foot">
+    数据来源：2026 年 1-5 月「无法连接 / 配对失败」标签 VOC 工单共 487 条，逐条阅读原声后按配网链路打标。明细分类表（487 行逐条带标签）可另附 Excel。
+  </div>
+
+</div>
