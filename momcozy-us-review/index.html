@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Momcozy US 评论剔除与评分重算</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--border:#2a3240;--txt:#e6edf3;--sub:#9aa7b8;--accent:#4f9cf9;--green:#3fb950;--red:#f85149;--amber:#d29922}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+header{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:32px}
+.eyebrow{color:var(--accent);font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+h1{font-size:27px;margin:8px 0 8px;font-weight:700}
+.meta{color:var(--sub);font-size:13px;margin-top:10px}
+h2{font-size:20px;margin:40px 0 8px;padding-left:12px;border-left:3px solid var(--accent);font-weight:650}
+h3{font-size:17px;margin:26px 0 12px;color:#fff}
+p{margin:8px 0} .sub{color:var(--sub);font-size:13.5px}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+@media(max-width:640px){.summary{grid-template-columns:1fr}}
+.scard{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px}
+.scard .p{color:var(--sub);font-size:13px;margin-bottom:8px}
+.scard .flow{font-size:15px;font-weight:600}
+.scard .flow .o{color:var(--sub)} .scard .flow .n{color:var(--green)} .scard .flow .d{color:var(--accent);font-size:13px}
+.calc{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:14px 18px;margin:10px 0}
+.calc.result{border-color:rgba(63,185,80,.35);background:rgba(63,185,80,.06)}
+.cl{display:flex;flex-direction:column;line-height:1.35}
+.cl span:first-child{color:var(--sub);font-size:11.5px;letter-spacing:.5px}
+.cl b{font-size:19px;font-weight:700}
+.cl .u{color:var(--sub);font-size:11.5px;font-weight:400}
+.cl.final b{font-size:26px}
+.op{color:var(--sub);font-size:20px;font-weight:300}
+.red{color:var(--red)!important} .green{color:var(--green)!important}
+table{width:100%;border-collapse:collapse;margin:14px 0 8px;font-size:13.5px;background:var(--panel);border-radius:10px;overflow:hidden}
+table.reviews{table-layout:fixed}
+col.c-num{width:36px} col.c-star{width:70px} col.c-hit{width:130px} col.c-snip{width:auto}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--panel2);color:var(--sub);font-weight:600;font-size:12px;text-transform:uppercase}
+tr:last-child td{border-bottom:none}
+td.num{color:var(--sub)}
+td.star{color:var(--amber);white-space:nowrap;font-size:10px;letter-spacing:-1px}
+td.star .sv{color:var(--sub);margin-left:5px;font-size:12px;letter-spacing:0}
+td.hit{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--accent);word-break:break-word}
+td.snip{color:#b6c2d2;font-size:12.5px;line-height:1.45;word-break:break-word;overflow-wrap:anywhere}
+.foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--border);color:var(--sub);font-size:12.5px}
+.kwbox{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:14px 0}
+.kwgroup{margin:10px 0}
+.kwlabel{color:var(--sub);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:8px;text-transform:uppercase}
+.kws{display:flex;gap:9px;flex-wrap:wrap}
+.kws code{background:var(--panel2);border:1px solid var(--border);padding:5px 12px;border-radius:6px;font-size:13px;color:var(--txt);font-family:ui-monospace,Menlo,monospace}
+</style></head>
+<body><div class="wrap">
+<header>
+<div class="eyebrow">US 地区 · 评分重算</div>
+<h1>Momcozy App（US）设备相关评论剔除与评分重算</h1>
+<div class="meta">数据快照 2026-07-01 · 仅统计 US 地区评论 · 数据源：飞书多维表格「Momcozy 应用商店评论汇总」</div>
+</header>
+
+<h2>结果概览</h2>
+<div class="summary">
+<div class="scard">
+<div class="p">App Store US</div>
+<div class="flow"><span class="o">4.14</span> → <span class="n">4.27</span> <span class="d">（+0.12，剔除 30 条）</span></div>
+</div>
+<div class="scard">
+<div class="p">Google Play US</div>
+<div class="flow"><span class="o">3.37</span> → <span class="n">3.46</span> <span class="d">（+0.09，剔除 19 条）</span></div>
+</div>
+</div>
+
+<h2>剔除关键词</h2>
+<div class="kwbox">
+<div class="kwgroup">
+<div class="kwlabel">BBM 婴儿监护器</div>
+<div class="kws">
+<code>bm04</code><code>BM04</code><code>bm4</code><code>bm08</code><code>bm8</code><code>baby monitor</code><code>monitor</code><code>camera</code><code>摄像头</code><code>sound detect</code><code>baby cry</code>
+</div>
+</div>
+<div class="kwgroup">
+<div class="kwlabel">白噪音音箱</div>
+<div class="kws">
+<code>wn02</code><code>wn05</code><code>DreamSync</code><code>Baby Sound Machine</code><code>sound machine</code>
+</div>
+</div>
+</div>
+
+<h2>App Store US</h2>
+
+<h3>评分计算过程</h3>
+<div class="calc">
+<div class="cl"><span>官方评分</span><b>4.14</b><span class="u">（564 个评分）</span></div>
+<div class="op">×</div>
+<div class="cl"><span>评分总数</span><b>564</b></div>
+<div class="op">=</div>
+<div class="cl"><span>星级总和</span><b>2336</b></div>
+</div>
+<div class="calc">
+<div class="cl"><span>剔除评论</span><b class="red">30 条</b><span class="u">（星级和 58，均分 1.93）</span></div>
+</div>
+<div class="calc result">
+<div class="cl"><span>新星级总和</span><b>2336 − 58 = 2278</b></div>
+<div class="op">÷</div>
+<div class="cl"><span>新评分总数</span><b>564 − 30 = 534</b></div>
+<div class="op">=</div>
+<div class="cl final"><span>新评分</span><b class="green">4.27</b><span class="u">（+0.12）</span></div>
+</div>
+<table class="reviews">
+<colgroup><col class="c-num"><col class="c-star"><col class="c-hit"><col class="c-snip"></colgroup>
+<tr><th>#</th><th>星级</th><th>命中关键词</th><th>评论片段</th></tr>
+<tr>
+<td class="num">1</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">3rd class app | 3rd class camera product</td></tr>
+<tr>
+<td class="num">2</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">baby monitor,camera,monitor,摄像头</td>
+<td class="snip">A lot of cool features but too many notifications | I woke up to 100 notifications that my babies room was too cold at 72 degrees from our baby monitor. I have temp detection set for 65 degrees. I like the whole fence th…</td></tr>
+<tr>
+<td class="num">3</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">monitor</td>
+<td class="snip">App doesn’t work | Can’t get past the main screen when selecting region, just gives an error code. My son woke up with a fever and I wanted to use the wireless thermometer to monitor it but it’s useless without the app. …</td></tr>
+<tr>
+<td class="num">4</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera,monitor,摄像头</td>
+<td class="snip">Disconnected and Offline | This app’s camera function often disconnects and goes offline, not great for someone who relies on this feature as a part of the monitor product.</td></tr>
+<tr>
+<td class="num">5</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby monitor,camera,monitor,摄像头</td>
+<td class="snip">No Picture in Picture | Very disappointed in my baby monitor. Even the most basic cameras and apps offer Picture in Picture.</td></tr>
+<tr>
+<td class="num">6</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">monitor</td>
+<td class="snip">App made my product worthless | I bought the continuous monitoring thermometer to use while my kids are sick.  You have to have the app to use it.  The app will NOT go past the region page and keeps giving me a server er…</td></tr>
+<tr>
+<td class="num">7</td>
+<td class="star">★★<span class="sv">2</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Camera Connection- In App | My camera disconnects, or goes ‘offline’, from my app constantly.  This is one of the primary reasons I got this particular camera.  And it is TERRIBLE to reconnect to the app. I unplug and re…</td></tr>
+<tr>
+<td class="num">8</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby monitor,monitor,摄像头</td>
+<td class="snip">Constantly logging me out | We use this app for the baby monitor and it constantly kicks us out and asks us to log back in. If you exit or close the app it immediately kicks you out.</td></tr>
+<tr>
+<td class="num">9</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Limit camera sharing to only video | Right now sharing camera feed shared both audio and video with others however I cannot talk kn the room then. Limit sharing to video only</td></tr>
+<tr>
+<td class="num">10</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">monitor</td>
+<td class="snip">Dark Mode | Needs a dark mode. Checking the monitor at night is terribly uncomfortably bright</td></tr>
+<tr>
+<td class="num">11</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">monitor,摄像头</td>
+<td class="snip">No continuous background sound for monitor in app | Monitor is great, but the fact that you can’t have continuous background play in the app is ridiculous. Other monitors, like the lollipop, etc., allow the monitor sound…</td></tr>
+<tr>
+<td class="num">12</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">bm04,camera,monitor,摄像头</td>
+<td class="snip">Won’t work | Tried to use for WiFi bm04 monitor and the app never prompted me for local network access which prevents it from being able to connect to the camera. Apparently there is no way to manually allow access eithe…</td></tr>
+<tr>
+<td class="num">13</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby monitor,bm04,monitor</td>
+<td class="snip">Not connecting | BM04 baby monitor not connecting to device. Can’t find on local network. Not even pulling up on an option</td></tr>
+<tr>
+<td class="num">14</td>
+<td class="star">★★<span class="sv">2</span></td>
+<td class="hit">baby monitor,camera,monitor,摄像头</td>
+<td class="snip">Sound only works when the app is open on your screen (monitor) | Hi, I am requesting that for the monitor you use on your phone that users can hear the sounds from the monitor/camera even if the app is not actively up on…</td></tr>
+<tr>
+<td class="num">15</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">baby monitor,camera,monitor,摄像头</td>
+<td class="snip">Lack of push notification sounds | The baby monitor camera sends push notifications but there is no way to turn on sounds on the IPhone. I wish the push notifications would have the option to make a sound in addition to …</td></tr>
+<tr>
+<td class="num">16</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">DreamSync,sound machine</td>
+<td class="snip">Update and now doesn’t work | It told me to update  the app and now my dreamsync is disconnect. Tried to pair it goes all the way and says it’s pared only to disappear. I’m trying to get my baby to sleep not fumble with …</td></tr>
+<tr>
+<td class="num">17</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">baby monitor,monitor</td>
+<td class="snip">Cannot find device | The app is not configured to request local network access even though it says it is required to find my device. I am trying to connect my Momcozy bm03 baby monitor. I have also tried manually and fai…</td></tr>
+<tr>
+<td class="num">18</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">Not all devices available | I have the S12 pump and the sound machine. Neither are able to be found in the app to connect. Defeats the purpose of the higher marketed devices if I can’t use the major function of my phone.</td></tr>
+<tr>
+<td class="num">19</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Smart Camera | Despite all of the troubleshooting I can find, the app will not pair with my iPhone. It seems to work fine with my husband’s galaxy. Defeats the purpose to buy the camera with app capability if won’t actua…</td></tr>
+<tr>
+<td class="num">20</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">Doesn’t work with sound machine | The whole reason I got this sound machine was to use the app with it and it will not sync and save the sound machine. I’ve added and received the “saved device” notification 7 times now …</td></tr>
+<tr>
+<td class="num">21</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">Doesn’t work | Downloaded yesterday to pair with the sound machine app. Went through pairing process, pairing successful as per the app. Then device immediately didn’t show up in the app. Went through process again, does…</td></tr>
+<tr>
+<td class="num">22</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby sound machine,sound machine</td>
+<td class="snip">Doesn’t work with noise machine | Downloaded to use with the Smart Baby Sound Machine, but couldn’t get it to work. Turns out that you need to enable it to pair with other devices on your home WiFi network, but the app d…</td></tr>
+<tr>
+<td class="num">23</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">Won’t keep my added devices | Havnt even had a chance to use the pump function of the app because I’m so frustrated with the sound machine. I have added the sound machine multiple times and yet it does not appear on the …</td></tr>
+<tr>
+<td class="num">24</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">NOT FOR SOUND MACHINE | don’t download this app for the Momcozy sound machine. Download the Tuya app.</td></tr>
+<tr>
+<td class="num">25</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Pumping while WFH | I work from home and pump 3 times a day. Having everything controlled from my phone means I can be on a Zoom call(camera off lol) and adjust without anyone knowing. The app is genuinely well designed …</td></tr>
+<tr>
+<td class="num">26</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">baby monitor,monitor</td>
+<td class="snip">Baby monitor is not loading well on app | While hand held baby monitor screen works well, the amount of time it takes to load and the amount of time it glitches without working on the app is extremely frustrating and mak…</td></tr>
+<tr>
+<td class="num">27</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">baby monitor,monitor</td>
+<td class="snip">Reassuring | Honestly, I didn&#x27;t realize how much peace of mind a good baby monitor could give me until I started using this one with the app. The video loads fast, the picture stays clear even in low light, and being abl…</td></tr>
+<tr>
+<td class="num">28</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Love It | Setup was a breeze - and it&#x27;s super easy to use too. The picture quality is hone Love that you can pan and tilt the camera, so I get a great view of the whole room and all her usual spots. I can just check on h…</td></tr>
+<tr>
+<td class="num">29</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby monitor,monitor,sound detect</td>
+<td class="snip">Notifications | We purchased this monitor specifically for the app features, especially sound detection and notifications. Unfortunately, the app is unreliable and unsafe. Even when our baby is clearly crying, we do not …</td></tr>
+<tr>
+<td class="num">30</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">monitor,摄像头</td>
+<td class="snip">Spam and lacking PIP | The app often asks the user to consider additional products before allowing you to access the features you desire. PiP is not available which makes the entire monitor system much less convenient.</td></tr>
+</table>
+
+
+<h2>Google Play US</h2>
+
+<h3>评分计算过程</h3>
+<div class="calc">
+<div class="cl"><span>官方评分</span><b>3.37</b><span class="u">（278 个评分）</span></div>
+<div class="op">×</div>
+<div class="cl"><span>评分总数</span><b>278</b></div>
+<div class="op">=</div>
+<div class="cl"><span>星级总和</span><b>937</b></div>
+</div>
+<div class="calc">
+<div class="cl"><span>剔除评论</span><b class="red">19 条</b><span class="u">（星级和 42，均分 2.21）</span></div>
+</div>
+<div class="calc result">
+<div class="cl"><span>新星级总和</span><b>937 − 42 = 895</b></div>
+<div class="op">÷</div>
+<div class="cl"><span>新评分总数</span><b>278 − 19 = 259</b></div>
+<div class="op">=</div>
+<div class="cl final"><span>新评分</span><b class="green">3.46</b><span class="u">（+0.09）</span></div>
+</div>
+<table class="reviews">
+<colgroup><col class="c-num"><col class="c-star"><col class="c-hit"><col class="c-snip"></colgroup>
+<tr><th>#</th><th>星级</th><th>命中关键词</th><th>评论片段</th></tr>
+<tr>
+<td class="num">1</td>
+<td class="star">★★★★<span class="sv">4</span></td>
+<td class="hit">DreamSync,sound machine</td>
+<td class="snip">I use the app to control my dreamsync sound machine. It works ok but I wish it had a dark mode. when I open the app to turn on a nightlight to feed my baby the bright white background is blinding.</td></tr>
+<tr>
+<td class="num">2</td>
+<td class="star">★★<span class="sv">2</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">camera - no night mode... this app is so bad we&#x27;re considering getting a different camera for our nursery. it doesn&#x27;t have a night theme, for an app that knows your going to be checking it.in the dark only having a white…</td></tr>
+<tr>
+<td class="num">3</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby monitor,monitor</td>
+<td class="snip">Buggy and awkward. Fails to connect to the BM4 baby monitor half the time, forcing me to return to the main app navigation and trying again. The timestamp for the monitor is an hour off. When updated in the base station,…</td></tr>
+<tr>
+<td class="num">4</td>
+<td class="star">★★<span class="sv">2</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Barely caters to dads at all, the whole company seems anti-dad unfortunately. The camera system shows last image but doesn&#x27;t notify you if it loses connection, instead freezing the image, so you&#x27;re staring at footage tha…</td></tr>
+<tr>
+<td class="num">5</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">camera,monitor,摄像头</td>
+<td class="snip">The app is great, but lately it has not been working well. I already paired my phone with the camera, and now while I am watching the stream, I get notified to turn on Bluetooth to add/pair a device. I have to press &quot;bac…</td></tr>
+<tr>
+<td class="num">6</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">baby cry</td>
+<td class="snip">so bad. notification is lag. 40mins after baby cry. when baby is not around, getting useless notifications every minute for every reason.</td></tr>
+<tr>
+<td class="num">7</td>
+<td class="star">★★<span class="sv">2</span></td>
+<td class="hit">baby monitor,monitor</td>
+<td class="snip">this update has delayed notifications where it&#x27;s telling me about what happened in my baby monitor like 30 minutes after the fact. worked great before.</td></tr>
+<tr>
+<td class="num">8</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">DreamSync</td>
+<td class="snip">I loved this app until, now, for some unknown reason the ambient light option on my Dreamsync white noise machine is now permanently at 15 and will not go any lower than off.</td></tr>
+<tr>
+<td class="num">9</td>
+<td class="star">★★★<span class="sv">3</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Application works fine for camera functionality. However my wife and I both use the same credentials for the login. Only one of us can log in and get push notifications at a time. We previously used Owlet where this was …</td></tr>
+<tr>
+<td class="num">10</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera</td>
+<td class="snip">I downloaded this to use with my cameras which is the entire reason I bought the set, but the app just says server error and I can&#x27;t get past that notification screen. The app is entirely useless and doesn&#x27;t do anything.…</td></tr>
+<tr>
+<td class="num">11</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">Extremely unreliable. After connecting to wifi and syncing the camera would only connect sometimes. I uninstalled and reinstalled app and continue having the same issue.</td></tr>
+<tr>
+<td class="num">12</td>
+<td class="star">★★<span class="sv">2</span></td>
+<td class="hit">baby monitor,camera,monitor,摄像头</td>
+<td class="snip">We have the momcozy baby monitor. My husband has an iPhone and can connect the device to the app. However with my Android phone we&#x27;ve been unable to connect the camera to the app. Very disappointing as I can&#x27;t see my bab…</td></tr>
+<tr>
+<td class="num">13</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">wow.. amazing. I posted a problem here... very next day it was fixed. im using the cameras and now they are working perfect. we have had great success with all of the Momcozy products.</td></tr>
+<tr>
+<td class="num">14</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">camera</td>
+<td class="snip">The app for the camera will not stay on. It goes to sleep and shuts the app off. This camera stopped working completely now. Your app and cameras do need work, but since you guys have great customer service and refunded …</td></tr>
+<tr>
+<td class="num">15</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">We listed a momcozy sound machine in our gift registry and even though the app recognizes it and &quot;adds it&quot; I can never see it displayed in the devices section. Now I&#x27;m reading a response to another reviewer that our soun…</td></tr>
+<tr>
+<td class="num">16</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">sound machine</td>
+<td class="snip">Device options- where are they??? I&#x27;m trying to add my sound machine and it&#x27;s only giving me the option of 1 specific breast pump as a device to add. Is there another app for the sound machine?</td></tr>
+<tr>
+<td class="num">17</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">camera,摄像头</td>
+<td class="snip">This service sucks. Especially for cost of their products. During critical times of needing to use the camera connection, which you can only connect to with the App. It will fail to establish a secure connection and the …</td></tr>
+<tr>
+<td class="num">18</td>
+<td class="star">★<span class="sv">1</span></td>
+<td class="hit">DreamSync</td>
+<td class="snip">after this I update can no longer sync my DreamSync to my Bluetooth. I have no sound if used from both my app and the buttons on the device</td></tr>
+<tr>
+<td class="num">19</td>
+<td class="star">★★★★★<span class="sv">5</span></td>
+<td class="hit">monitor</td>
+<td class="snip">I use this monitor every single day. The app opens quickly, the live feed is smooth, and I can check on my baby while I’m doing other things around the house. Anything that gives me one less thing to worry about is a win…</td></tr>
+</table>
+
+
+<div class="foot">
+数据源：飞书多维表格 PjWqbQEvIaj44mswuVfcTw0NnUd「Momcozy 应用商店评论汇总」· US 地区快照 2026-07-01<br>
+官方评分总数：App Store US = 564，Google Play US = 278
+</div>
+</div></body></html>
